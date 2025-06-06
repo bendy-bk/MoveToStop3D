@@ -12,9 +12,13 @@ public class Character : GameUnit
 
     public Animator anim;
     private string currentAnim;
-    private float range;
-    private float size;
-   
+    [SerializeField] private float range;
+    [SerializeField] private float size;
+    private bool isAttack;
+    private bool isMove;
+    
+
+
     public override void OnInit()
     {
         
@@ -25,6 +29,7 @@ public class Character : GameUnit
     }
 
     public virtual void Move(){}
+
     public Vector3 CheckGround(Vector3 nextPoint)
     {
         RaycastHit hit;
@@ -56,15 +61,48 @@ public class Character : GameUnit
     {
 
     }
-
     public void OnHit()
     {
 
     }
-
     public void OnDeath()
     {
 
     }
+
+    public void Attack()
+    {
+        Invoke(nameof(Throw), 0.4f);
+    }
+
+    public void Throw()
+    {
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Character c = other.GetComponent<Character>();
+            Debug.Log(c.TF.position);
+            characters.Add(c);
+        }
+
+        Debug.Log(characters.Count);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Character c = other.GetComponent<Character>();
+            characters.Remove(c);
+        }
+
+        Debug.Log(characters.Count);
+
+    }
+
 
 }

@@ -30,13 +30,11 @@ public class Player : Character
         }
 
         else
-
         {
             ChangeAnim(Constants.ANIM_IDLE);
         }
-
-
     }
+
 
 
 }
