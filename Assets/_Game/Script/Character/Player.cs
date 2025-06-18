@@ -9,31 +9,42 @@ public class Player : Character
     {
         Move();
     }
-
-
     public override void Move()
     {
-        // Nếu joystick có hướng
         if (JoystickControl.direct != Vector3.zero)
         {
-
+            isMove = true;
             Vector3 direction = JoystickControl.direct;
             Vector3 movement = direction * speed * Time.deltaTime;
 
             transform.position += movement;
 
-            // Xoay nhân vật theo hướng di chuyển
             if (model != null)
                 model.forward = direction;
-
             ChangeAnim(Constants.ANIM_RUN);
-        }
 
-        else
+        }
+        else if(JoystickControl.direct == Vector3.zero)
         {
-            ChangeAnim(Constants.ANIM_IDLE);
+            isMove = false;
+
+            if (CharacterCount > 0 && !isAttack)
+            {      
+                if (!isThrowing)
+                {
+                    ChangeAnim(Constants.ANIM_ATTACK);
+                    isAttack = true;
+                    Attack();
+                }
+              
+            }
+            else if (CharacterCount == 0)
+            {
+                ChangeAnim(Constants.ANIM_IDLE);
+            }
         }
     }
+
 
 
 

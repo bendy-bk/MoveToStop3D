@@ -1,3 +1,4 @@
+﻿using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,11 +8,27 @@ public class Bot : Character
 
     private Vector3 destionation;
 
+    private IState<Bot> currentState;
+
     public bool IsDestination => Vector3.Distance(destionation, Vector3.right * TF.position.x + Vector3.forward * TF.position.z) < 0.1f;
 
     public override void OnInit()
     {
         base.OnInit();
+        ChangeState(new IdleState());
+    }
+
+    private void Start()
+    {
+        OnInit();
+    }
+
+    private void Update()
+    {
+        if (currentState != null)
+        {
+            currentState.OnExcute(this);
+        }
     }
 
     public override void OnDespawn()
@@ -26,6 +43,41 @@ public class Bot : Character
         destionation.y = 0;
         agent.SetDestination(position);
     }
+    public void ChangeState(IState<Bot> state)
+    {
+        if (currentState != null)
+        {
+            currentState.OnExit(this);
+        }
 
+        currentState = state;
+
+        if (currentState != null)
+        {
+            currentState.OnEnter(this);
+        }
+    }
+
+    internal void StopMove()
+    {
+        agent.enabled = false;
+    }
+
+    public Vector3 RandomPosGround()
+    {
+        float x = UnityEngine.Random.Range(-20f, 20f); // nửa chiều dài
+        float z = UnityEngine.Random.Range(-20f, 20f); // nửa chiều rộng
+        float y = 0f; // mặt đất
+
+        Vector3 randomPos = new Vector3(x, y, z);
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(randomPos, out hit, 1f, NavMesh.AllAreas))
+        {
+            return hit.position;
+        }
+
+        return transform.position;
+    }
 
 }

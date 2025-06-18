@@ -1,25 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using UnityEngine;
 
 public class IdleState : IState<Bot>
 {
+    private float timer;
+    private float maxTimer;
+
     public void OnEnter(Bot t)
     {
-        throw new NotImplementedException();
+        t.ChangeAnim(Constants.ANIM_IDLE);
+        timer = 0f;
+        maxTimer = Random.Range(3, 7);
     }
 
     public void OnExcute(Bot t)
     {
-        throw new NotImplementedException();
+        timer += Time.deltaTime;
+        if (timer >= maxTimer)
+        {
+            t.ChangeState(new PatrolState()); 
+        }
     }
 
     public void OnExit(Bot t)
     {
-        throw new NotImplementedException();
+        timer = 0f;
+        maxTimer = 0f;
     }
 }
-

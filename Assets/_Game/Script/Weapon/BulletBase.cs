@@ -5,5 +5,6 @@ using UnityEngine;
 public abstract class BulletBase : WeaponBase
 {
     public abstract void OnInit();
+    public abstract void OnDespawn();
 
 }

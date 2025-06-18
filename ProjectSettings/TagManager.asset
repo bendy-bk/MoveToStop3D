@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Bot
+  - RangeAttack
   layers:
   - Default
   - TransparentFX

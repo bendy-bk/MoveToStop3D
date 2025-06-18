@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\_Game\Script\Character\StateMachine\PatrolState.cs" />
+    <Compile Include="Assets\_Pool\Pool\ObjectPoolManager.cs" />
     <Compile Include="Assets\JoystickPack\Scripts\JoystickControl.cs" />
     <Compile Include="Assets\_Pool\Pool\GameUnit.cs" />
     <Compile Include="Assets\_Game\Script\Weapon\Arrow.cs" />
@@ -69,6 +70,8 @@
     <Compile Include="Assets\_Game\Script\Character\StateMachine\IdleState.cs" />
     <Compile Include="Assets\_Game\Script\Character\Player.cs" />
     <Compile Include="Assets\_Game\Script\Character\Bot.cs" />
+    <Compile Include="Assets\Test\NewBehaviourScript.cs" />
+    <Compile Include="Assets\_Game\Script\GenericSingleton.cs" />
     <Compile Include="Assets\_Game\Script\Character\Character.cs" />
     <Compile Include="Assets\_Game\Script\Weapon\BulletBase.cs" />
     <Compile Include="Assets\_Game\Script\Constants.cs" />
