@@ -44,7 +44,7 @@ public class ObjectPoolManager : GenericSingleton<ObjectPoolManager>
         }
     }
 
-    public GameObject SpawnFromPool(PoolType tag, Transform throwPoint)
+    public GameObject SpawnFromPool(PoolType tag, Transform Point)
     {
         if (!poolDictionary.ContainsKey(tag))
         {
@@ -54,7 +54,8 @@ public class ObjectPoolManager : GenericSingleton<ObjectPoolManager>
 
         GameObject objToSpawn = poolDictionary[tag].Dequeue();
 
-        objToSpawn.transform.position = throwPoint.position;
+        objToSpawn.transform.position = Point.position;
+
         objToSpawn.SetActive(true);
 
         poolDictionary[tag].Enqueue(objToSpawn);

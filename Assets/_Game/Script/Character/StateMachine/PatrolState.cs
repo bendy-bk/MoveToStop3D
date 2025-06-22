@@ -18,7 +18,7 @@ public class PatrolState : IState<Bot>
 
     public void OnExcute(Bot t)
     {
-        t.model.forward = point - t.TF.position;
+        t.Model.forward = point - t.TF.position;
         t.SetDestination(point);
 
         if(t.IsDestination)

@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -25,9 +25,12 @@ public class Bot : Character
 
     private void Update()
     {
-        if (currentState != null)
+        if (GameManager.Instance.IsState(GameState.Gameplay) && currentState != null)
         {
-            currentState.OnExcute(this);
+            if (currentState != null)
+            {
+                currentState.OnExcute(this);
+            }
         }
     }
 
@@ -43,6 +46,7 @@ public class Bot : Character
         destionation.y = 0;
         agent.SetDestination(position);
     }
+
     public void ChangeState(IState<Bot> state)
     {
         if (currentState != null)

@@ -10,6 +10,8 @@ public class Arrow : MonoBehaviour
     public Rigidbody rb;
     public Vector3 directionAttack;
 
+    public bool IsFlying { get => isFlying; set => isFlying = value; }
+
     void Update()
     {
         MoveToTarget();
@@ -17,7 +19,7 @@ public class Arrow : MonoBehaviour
 
     private void MoveToTarget()
     {
-        if (!isFlying) return;
+        if (!IsFlying) return;
 
         // Di chuyển theo hướng cố định
         Vector3 movePosition = transform.position + directionAttack.normalized * speed * Time.deltaTime;
@@ -26,7 +28,6 @@ public class Arrow : MonoBehaviour
         // Hướng viên đạn
         transform.forward = directionAttack.normalized;
 
-        
         float maxDistance = 10f;
         if (Vector3.Distance(characterOwner.TF.position, transform.position) > maxDistance)
         {
@@ -34,12 +35,11 @@ public class Arrow : MonoBehaviour
         }
     }
 
-
     public void OnDespawn()
     {
-        isFlying = false;
-        characterOwner.isAttack = false;
-        characterOwner.isThrowing = false;
+        IsFlying = false;
+        characterOwner.IsAttacking = false;
+        characterOwner.IsThrowing = false;
         gameObject.SetActive(false); // Chỉ set false khi chạm
     }
 
@@ -48,7 +48,7 @@ public class Arrow : MonoBehaviour
         targetCharacter = target;
         characterOwner = owner;
         directionAttack = dir;
-        isFlying = true;
+        IsFlying = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -58,14 +58,16 @@ public class Arrow : MonoBehaviour
             Character c = other.GetComponent<Character>();
             if (c != null)
             {
+                characterOwner?.OnHit();
                 c.OnDeath();
                 // Xoá khỏi danh sách tấn công của người bắn
-                characterOwner?.RemoveTarget(targetCharacter);
+                characterOwner?.RemoveTarget(targetCharacter);           
             }
-            
-            OnDespawn();
-            
-        }
 
+            OnDespawn();        
+        }
     }
+
+
+
 }

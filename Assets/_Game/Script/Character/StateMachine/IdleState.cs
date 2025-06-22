@@ -17,7 +17,7 @@ public class IdleState : IState<Bot>
         timer += Time.deltaTime;
         if (timer >= maxTimer)
         {
-            t.ChangeState(new PatrolState()); 
+            t.ChangeState(new PatrolState());
         }
     }
 

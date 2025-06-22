@@ -7,36 +7,33 @@ public class Player : Character
 
     private void Update()
     {
-        Move();
+        if (GameManager.Instance.IsState(GameState.Gameplay))
+        {
+            Move();
+        }
     }
     public override void Move()
     {
         if (JoystickControl.direct != Vector3.zero)
         {
-            isMove = true;
+            IsMoving = true;
             Vector3 direction = JoystickControl.direct;
             Vector3 movement = direction * speed * Time.deltaTime;
 
             transform.position += movement;
 
-            if (model != null)
-                model.forward = direction;
+            if (Model != null)
+                Model.forward = direction;
             ChangeAnim(Constants.ANIM_RUN);
 
         }
-        else if(JoystickControl.direct == Vector3.zero)
+        else if (JoystickControl.direct == Vector3.zero)
         {
-            isMove = false;
+            IsMoving = false;
 
-            if (CharacterCount > 0 && !isAttack)
-            {      
-                if (!isThrowing)
-                {
-                    ChangeAnim(Constants.ANIM_ATTACK);
-                    isAttack = true;
-                    Attack();
-                }
-              
+            if (CharacterCount > 0 && !IsAttacking && !IsThrowing)
+            {
+                Attack();
             }
             else if (CharacterCount == 0)
             {
@@ -44,9 +41,6 @@ public class Player : Character
             }
         }
     }
-
-
-
 
 }
 

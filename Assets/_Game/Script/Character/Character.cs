@@ -1,38 +1,52 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class Character : GameUnit
 {
+
+    public static event Action<Character> OnBotDeath;
+
     [Header("Layer")]
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] public Transform model;
+    [SerializeField] private Transform model;
+    [SerializeField] private Transform character;
 
     [Header("List Character")]
     private List<Character> characters = new();
 
-    public Animator anim;
+
+    [SerializeField] private Animator anim;
     private string currentAnim;
-    [SerializeField] private float range;
+    private Vector3 modelRotate;
+
+    [SerializeField] public int totalKill = 0;
+    [SerializeField] private Transform throwPoint;
+
+    [SerializeField] private TextMeshPro textKill;
     [SerializeField] private float size;
 
-    public bool isAttack = false;
-    public bool isMove = false;
-    public bool isThrowing = false;
+    [SerializeField] private bool isAttacking = false;
+    [SerializeField] private bool isMoving = false;
+    [SerializeField] private bool isThrowing = false;
 
-    [SerializeField] private Transform throwPoint;
-    private Vector3 modelRotate;
+
 
     public int CharacterCount => characters.Count;
 
+    public bool IsAttacking { get => isAttacking; set => isAttacking = value; }
+    public bool IsMoving { get => isMoving; set => isMoving = value; }
+    public bool IsThrowing { get => isThrowing; set => isThrowing = value; }
+    public Transform Model { get => model; set => model = value; }
+
     public override void OnInit()
     {
-
     }
 
     public override void OnDespawn()
     {
-
     }
 
     public virtual void Move() { }
@@ -59,38 +73,66 @@ public class Character : GameUnit
 
     public void OnHit()
     {
-
+        totalKill++;
+        UpSize();
+        LevelManager.Instance.CheckWin(totalKill);
     }
 
-    public void OnDeath()
+    public void UpSize()
     {
+        character.localScale += Vector3.one * 0.05f;
+
+        if (textKill != null)
+        {
+            textKill.text = $"{totalKill}";
+        }
+    }
+
+    public virtual void OnDeath()
+    {
+        OnBotDeath?.Invoke(this); // Gửi sự kiện
         characters.Remove(this); // Cẩn thận nếu dùng trong list chung
-        isThrowing = false;
         gameObject.SetActive(false);
+
+        if(this is Player)
+        {
+            LevelManager.Instance.Lose();
+
+        }
+
     }
 
     public void Attack()
     {
+        ChangeAnim(Constants.ANIM_ATTACK);
+
+        if (this is Player)
+        {
+            Debug.Log("Player");
+        }
+
+        if (this is Bot)
+        {
+            Debug.Log("Bot");
+        }
+
         Invoke(nameof(Throw), 0.4f);
     }
 
     public void Throw()
     {
         // Không tấn công nếu đang di chuyển hoặc không có mục tiêu
-        if (isMove || characters.Count == 0)
+        if (IsMoving || characters.Count == 0)
         {
-            isAttack = false;
             return;
         }
         // Lấy mục tiêu đầu tiên còn hợp lệ
         var target = characters.FirstOrDefault();
-  
-        if (target != null && isAttack && !isThrowing)
+
+        if (target != null && !IsAttacking && !IsThrowing)
         {
             modelRotate = target.TF.position - TF.position;
-            model.forward = modelRotate;
-
-            isThrowing = true;
+            Model.forward = modelRotate;
 
             // Lấy mũi tên từ pool và gắn vào throwPoint
             GameObject arrowObj = ObjectPoolManager.Instance.SpawnFromPool(PoolType.Bullet, throwPoint);
@@ -101,9 +143,10 @@ public class Character : GameUnit
             // Khởi tạo lại mũi tên
             Arrow pooledArrow = arrowObj.GetComponent<Arrow>();
 
-            pooledArrow.SetTargetFly(this, target, modelRotate); // Truyền Transform mục tiêu
+            pooledArrow.SetTargetFly(this, target, modelRotate);
 
-            isAttack = false;
+            IsThrowing = true;
+            IsAttacking = true;
         }
 
     }
@@ -119,9 +162,8 @@ public class Character : GameUnit
         {
             Character c = other.GetComponent<Character>();
             characters.Add(c);
-            Debug.Log(c.TF.position);
         }
-        //Debug.Log(characters.Count);
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -132,7 +174,6 @@ public class Character : GameUnit
             characters.Remove(exitingCharacter); // Remove Character vừa đi ra
         }
 
-        //Debug.Log(characters.Count);
     }
 
 }
