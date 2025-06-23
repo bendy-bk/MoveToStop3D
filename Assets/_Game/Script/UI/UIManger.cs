@@ -1,14 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
-using System.Numerics;
-using Unity.VisualScripting;
 
 public class UIManager : GenericSingleton<UIManager>
 {
-    //dict for quick query UI prefab
+    //dict for quick query UI prefabVS
     private Dictionary<System.Type, UICanvas> uiCanvasPrefab = new Dictionary<System.Type, UICanvas>();
 
     //list from resource

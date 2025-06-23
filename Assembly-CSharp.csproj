@@ -71,6 +71,7 @@
     <Compile Include="Assets\_Game\Script\Level\Level.cs" />
     <Compile Include="Assets\_Game\Script\UI\VictoryUI.cs" />
     <Compile Include="Assets\_Game\Script\Weapon\Arrow.cs" />
+    <Compile Include="Assets\_Game\Script\ScriptableObject\WeaponSO.cs" />
     <Compile Include="Assets\_Game\Script\UI\UIManger.cs" />
     <Compile Include="Assets\_Game\Script\Weapon\Hammer.cs" />
     <Compile Include="Assets\_Game\Script\CameraFollower.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Assets\_Game\Script\GenericSingleton.cs" />
     <Compile Include="Assets\_Game\Script\Character\Character.cs" />
     <Compile Include="Assets\_Game\Script\Weapon\BulletBase.cs" />
+    <Compile Include="Assets\_Game\Script\Manager\EquipmentManager.cs" />
     <Compile Include="Assets\_Game\Script\Constants.cs" />
     <Compile Include="Assets\_Game\Script\Character\StateMachine\IState.cs" />
     <Compile Include="Assets\_Game\Script\Manager\BotManger.cs" />

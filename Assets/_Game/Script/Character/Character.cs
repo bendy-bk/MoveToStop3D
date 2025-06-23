@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class Character : GameUnit
 {
-
     public static event Action<Character> OnBotDeath;
+    
 
     [Header("Layer")]
     [SerializeField] private LayerMask groundLayer;
@@ -27,12 +27,19 @@ public class Character : GameUnit
 
     [SerializeField] private TextMeshPro textKill;
     [SerializeField] private float size;
+    [SerializeField] private float radius;
+    [SerializeField] private Collider circleCollider;
+
 
     [SerializeField] private bool isAttacking = false;
     [SerializeField] private bool isMoving = false;
     [SerializeField] private bool isThrowing = false;
 
 
+    private GameObject weaponSpawn;
+    private WeaponSO weaponcurrent;
+
+    
 
     public int CharacterCount => characters.Count;
 
@@ -40,35 +47,17 @@ public class Character : GameUnit
     public bool IsMoving { get => isMoving; set => isMoving = value; }
     public bool IsThrowing { get => isThrowing; set => isThrowing = value; }
     public Transform Model { get => model; set => model = value; }
+    public float Radius { get => radius; set => radius = value; }
+    public Transform ThrowPoint { get => throwPoint; set => throwPoint = value; }
+    public GameObject WeaponSpawn { get => weaponSpawn; set => weaponSpawn = value; }
+    public WeaponSO WeaponCurrent => EquipmentManager.Instance.GetWeaponEquip();
 
-    public override void OnInit()
-    {
-    }
-
-    public override void OnDespawn()
-    {
-    }
+    public override void OnInit() {}
 
     public virtual void Move() { }
 
-    public void ChangeAnim(string newAnim)
+    public override void OnDespawn()
     {
-        if (currentAnim != newAnim)
-        {
-            anim.ResetTrigger(currentAnim);
-            currentAnim = newAnim;
-            anim.SetTrigger(currentAnim);
-        }
-    }
-
-    public void ChangeWeapon()
-    {
-
-    }
-
-    public void ChangeHat()
-    {
-
     }
 
     public void OnHit()
@@ -76,6 +65,20 @@ public class Character : GameUnit
         totalKill++;
         UpSize();
         LevelManager.Instance.CheckWin(totalKill);
+    }
+
+    public virtual void OnDeath()
+    {
+        OnBotDeath?.Invoke(this); // Gửi sự kiện
+        characters.Remove(this); // Cẩn thận nếu dùng trong list chung
+        gameObject.SetActive(false);
+
+        if (this is Player)
+        {
+            LevelManager.Instance.Lose();
+
+        }
+
     }
 
     public void UpSize()
@@ -88,33 +91,29 @@ public class Character : GameUnit
         }
     }
 
-    public virtual void OnDeath()
-    {
-        OnBotDeath?.Invoke(this); // Gửi sự kiện
-        characters.Remove(this); // Cẩn thận nếu dùng trong list chung
-        gameObject.SetActive(false);
+    //public void GetDistanceToCircle()
+    //{
+    //    // Lấy điểm gần nhất trên collider so với vị trí player
+    //    Vector3 closestPoint = circleCollider.ClosestPoint(TF.position);
 
-        if(this is Player)
-        {
-            LevelManager.Instance.Lose();
+    //    // Khoảng cách từ player (tâm) đến mép vòng tròn (bán kính thực tế)
+    //    radius = Vector3.Distance(TF.position, closestPoint);
 
-        }
-
-    }
+    //}
 
     public void Attack()
     {
         ChangeAnim(Constants.ANIM_ATTACK);
 
-        if (this is Player)
-        {
-            Debug.Log("Player");
-        }
+        //if (this is Player)
+        //{
+        //    Debug.Log("Player");
+        //}
 
-        if (this is Bot)
-        {
-            Debug.Log("Bot");
-        }
+        //if (this is Bot)
+        //{
+        //    Debug.Log("Bot");
+        //}
 
         Invoke(nameof(Throw), 0.4f);
     }
@@ -135,10 +134,10 @@ public class Character : GameUnit
             Model.forward = modelRotate;
 
             // Lấy mũi tên từ pool và gắn vào throwPoint
-            GameObject arrowObj = ObjectPoolManager.Instance.SpawnFromPool(PoolType.Bullet, throwPoint);
+            GameObject arrowObj = ObjectPoolManager.Instance.SpawnFromPool(PoolType.Bullet, ThrowPoint);
 
-            // Đặt vị trí nếu cần (nếu prefab không auto gắn vị trí throwPoint)
-            arrowObj.transform.position = throwPoint.position;
+            // Đặt vị trí nếu cần (nếu prefabVS không auto gắn vị trí throwPoint)
+            arrowObj.transform.position = ThrowPoint.position;
 
             // Khởi tạo lại mũi tên
             Arrow pooledArrow = arrowObj.GetComponent<Arrow>();
@@ -154,6 +153,26 @@ public class Character : GameUnit
     public void RemoveTarget(Character c)
     {
         characters.Remove(c);
+    }
+
+    public void ChangeAnim(string newAnim)
+    {
+        if (currentAnim != newAnim)
+        {
+            anim.ResetTrigger(currentAnim);
+            currentAnim = newAnim;
+            anim.SetTrigger(currentAnim);
+        }
+    }
+
+    public void ChangeWeapon()
+    {
+
+    }
+
+    public void ChangeHat()
+    {
+
     }
 
     private void OnTriggerEnter(Collider other)

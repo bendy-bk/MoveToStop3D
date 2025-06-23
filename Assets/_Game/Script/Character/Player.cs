@@ -1,10 +1,9 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Player : Character
 {
     [SerializeField] private float speed = 5;
-
+    
     private void Update()
     {
         if (GameManager.Instance.IsState(GameState.Gameplay))
@@ -40,6 +39,15 @@ public class Player : Character
                 ChangeAnim(Constants.ANIM_IDLE);
             }
         }
+    }
+
+    public override void OnInit()
+    {
+        base.OnInit();
+        WeaponSpawn = EquipmentManager.Instance.GetWeaponEquip().PrefabVS;
+
+        Instantiate(WeaponSpawn, ThrowPoint.position, Quaternion.identity, ThrowPoint);
+
     }
 
 }

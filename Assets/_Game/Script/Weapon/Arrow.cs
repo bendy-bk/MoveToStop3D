@@ -28,8 +28,9 @@ public class Arrow : MonoBehaviour
         // Hướng viên đạn
         transform.forward = directionAttack.normalized;
 
-        float maxDistance = 10f;
-        if (Vector3.Distance(characterOwner.TF.position, transform.position) > maxDistance)
+        float maxDis = 6f;
+
+        if (Vector3.Distance(characterOwner.TF.position, transform.position) > maxDis)
         {
             OnDespawn(); 
         }
@@ -67,7 +68,6 @@ public class Arrow : MonoBehaviour
             OnDespawn();        
         }
     }
-
 
 
 }
