@@ -47,7 +47,10 @@ public class Player : Character
 
         WeaponSpawnVS = EquipmentManager.Instance.GetWeaponEquip().PrefabVS;
 
-        Instantiate(WeaponSpawnVS, ThrowPoint.position, Quaternion.identity, ThrowPoint);
+        var weaponObj = Instantiate(WeaponSpawnVS, ThrowPoint);
+        weaponObj.transform.localPosition = Vector3.zero;
+        weaponObj.transform.localRotation = Quaternion.identity;
+
 
     }
 

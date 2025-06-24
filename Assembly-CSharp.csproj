@@ -65,12 +65,12 @@
     <Compile Include="Assets\_Game\Script\Manager\LevelManager.cs" />
     <Compile Include="Assets\JoystickPack\Scripts\JoystickControl.cs" />
     <Compile Include="Assets\_Pool\Pool\PoolController.cs" />
+    <Compile Include="Assets\_Game\Script\Weapon\Spear.cs" />
     <Compile Include="Assets\_Game\Script\UI\UICanvas.cs" />
     <Compile Include="Assets\_Pool\Pool\GameUnit.cs" />
     <Compile Include="Assets\_Game\Script\Manager\GameManager.cs" />
     <Compile Include="Assets\_Game\Script\Level\Level.cs" />
     <Compile Include="Assets\_Game\Script\UI\VictoryUI.cs" />
-    <Compile Include="Assets\_Game\Script\Weapon\Arrow.cs" />
     <Compile Include="Assets\_Game\Script\ScriptableObject\WeaponSO.cs" />
     <Compile Include="Assets\_Game\Script\UI\UIManger.cs" />
     <Compile Include="Assets\_Game\Script\Weapon\Hammer.cs" />

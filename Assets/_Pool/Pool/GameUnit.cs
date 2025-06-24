@@ -23,6 +23,6 @@ public enum PoolType
 {
     Bot = 0, 
     Player = 1, 
-    Bullet_Arrow = 2,
+    Bullet_Spear = 2,
     Bullet_Hammer = 3
 }

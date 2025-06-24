@@ -11,7 +11,7 @@ public class NewBehaviourScript : MonoBehaviour
     void Start()
     {
         GameObject obj = Instantiate(Arrow);
-        Arrow arrow = obj.GetComponent<Arrow>();
+        Spear arrow = obj.GetComponent<Spear>();
         //arrow.SetTargetFly(Target, this);
     }
 
