@@ -44,9 +44,10 @@ public class Player : Character
     public override void OnInit()
     {
         base.OnInit();
-        WeaponSpawn = EquipmentManager.Instance.GetWeaponEquip().PrefabVS;
 
-        Instantiate(WeaponSpawn, ThrowPoint.position, Quaternion.identity, ThrowPoint);
+        WeaponSpawnVS = EquipmentManager.Instance.GetWeaponEquip().PrefabVS;
+
+        Instantiate(WeaponSpawnVS, ThrowPoint.position, Quaternion.identity, ThrowPoint);
 
     }
 

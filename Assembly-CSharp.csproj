@@ -62,9 +62,9 @@
   <ItemGroup>
     <Compile Include="Assets\_Game\Script\Character\StateMachine\PatrolState.cs" />
     <Compile Include="Assets\_Game\Script\UI\LoseUI.cs" />
-    <Compile Include="Assets\_Pool\Pool\ObjectPoolManager.cs" />
     <Compile Include="Assets\_Game\Script\Manager\LevelManager.cs" />
     <Compile Include="Assets\JoystickPack\Scripts\JoystickControl.cs" />
+    <Compile Include="Assets\_Pool\Pool\PoolController.cs" />
     <Compile Include="Assets\_Game\Script\UI\UICanvas.cs" />
     <Compile Include="Assets\_Pool\Pool\GameUnit.cs" />
     <Compile Include="Assets\_Game\Script\Manager\GameManager.cs" />
@@ -78,7 +78,8 @@
     <Compile Include="Assets\_Game\Script\Character\StateMachine\IdleState.cs" />
     <Compile Include="Assets\_Game\Script\Character\Player.cs" />
     <Compile Include="Assets\_Game\Script\Character\Bot.cs" />
-    <Compile Include="Assets\Test\NewBehaviourScript.cs" />
+    <Compile Include="Assets\AssetStore\NewBehaviourScript.cs" />
+    <Compile Include="Assets\_Pool\Pool\SimplePool.cs" />
     <Compile Include="Assets\_Game\Script\GenericSingleton.cs" />
     <Compile Include="Assets\_Game\Script\Character\Character.cs" />
     <Compile Include="Assets\_Game\Script\Weapon\BulletBase.cs" />

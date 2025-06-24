@@ -4,6 +4,8 @@ using UnityEngine.AI;
 
 public class Bot : Character
 {
+    public GameObject c;
+
     public NavMeshAgent agent;
 
     private Vector3 destionation;
@@ -12,17 +14,20 @@ public class Bot : Character
 
     public bool IsDestination => Vector3.Distance(destionation, Vector3.right * TF.position.x + Vector3.forward * TF.position.z) < 0.1f;
 
-    public override void OnInit()
-    {
-        base.OnInit();
-        ChangeState(new IdleState());
-    }
-
     private void Start()
     {
         OnInit();
     }
 
+    public override void OnInit()
+    {
+        base.OnInit();
+        ChangeState(new IdleState());
+        // To do : random weapon for bot
+        Instantiate(c, ThrowPoint.position, Quaternion.identity, ThrowPoint);
+    }
+
+    
     private void Update()
     {
         if (GameManager.Instance.IsState(GameState.Gameplay) && currentState != null)

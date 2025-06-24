@@ -28,19 +28,15 @@ public class Character : GameUnit
     [SerializeField] private TextMeshPro textKill;
     [SerializeField] private float size;
     [SerializeField] private float radius;
-    [SerializeField] private Collider circleCollider;
-
 
     [SerializeField] private bool isAttacking = false;
     [SerializeField] private bool isMoving = false;
     [SerializeField] private bool isThrowing = false;
 
-
-    private GameObject weaponSpawn;
+    private GameObject weaponSpawnVS;
     private WeaponSO weaponcurrent;
 
     
-
     public int CharacterCount => characters.Count;
 
     public bool IsAttacking { get => isAttacking; set => isAttacking = value; }
@@ -49,7 +45,7 @@ public class Character : GameUnit
     public Transform Model { get => model; set => model = value; }
     public float Radius { get => radius; set => radius = value; }
     public Transform ThrowPoint { get => throwPoint; set => throwPoint = value; }
-    public GameObject WeaponSpawn { get => weaponSpawn; set => weaponSpawn = value; }
+    public GameObject WeaponSpawnVS { get => weaponSpawnVS; set => weaponSpawnVS = value; }
     public WeaponSO WeaponCurrent => EquipmentManager.Instance.GetWeaponEquip();
 
     public override void OnInit() {}
@@ -69,14 +65,14 @@ public class Character : GameUnit
 
     public virtual void OnDeath()
     {
-        OnBotDeath?.Invoke(this); // Gửi sự kiện
-        characters.Remove(this); // Cẩn thận nếu dùng trong list chung
-        gameObject.SetActive(false);
-
         if (this is Player)
         {
             LevelManager.Instance.Lose();
-
+        }
+        if (this is Bot) {
+            OnBotDeath?.Invoke(this); // Gửi sự kiện
+            characters.Remove(this); // Cẩn thận nếu dùng trong list chung
+            SimplePool.Despawn(this);
         }
 
     }
@@ -134,15 +130,11 @@ public class Character : GameUnit
             Model.forward = modelRotate;
 
             // Lấy mũi tên từ pool và gắn vào throwPoint
-            GameObject arrowObj = ObjectPoolManager.Instance.SpawnFromPool(PoolType.Bullet, ThrowPoint);
 
-            // Đặt vị trí nếu cần (nếu prefabVS không auto gắn vị trí throwPoint)
-            arrowObj.transform.position = ThrowPoint.position;
+            //GameObject arrowObj = ObjectPoolManager.Instance.SpawnFromPool(PoolType.Bullet, ThrowPoint);
+            BulletBase bullet = SimplePool.Spawn<BulletBase>(WeaponCurrent.PoolType, ThrowPoint.position, Quaternion.identity);
 
-            // Khởi tạo lại mũi tên
-            Arrow pooledArrow = arrowObj.GetComponent<Arrow>();
-
-            pooledArrow.SetTargetFly(this, target, modelRotate);
+            bullet.SetTargetFly(this, target, modelRotate);
 
             IsThrowing = true;
             IsAttacking = true;

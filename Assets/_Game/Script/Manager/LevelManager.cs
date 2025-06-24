@@ -78,6 +78,7 @@ public class LevelManager : GenericSingleton<LevelManager>
 
     public void OnNextLevel()
     {
+        Character.OnBotDeath -= BotManger.Instance.HandleBotDeath;
         GameManager.Instance.ChangeState(GameState.Gameplay);
         UIManager.Instance.CloseUI<JoystickControl>();
         levelIndex++;

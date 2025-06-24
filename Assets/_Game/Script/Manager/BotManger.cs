@@ -13,22 +13,18 @@ public class BotManger : GenericSingleton<BotManger>
         Character.OnBotDeath += HandleBotDeath;
     }
 
-    private void OnDisable()
-    {
-        Character.OnBotDeath -= HandleBotDeath;
-    }
     public Level CurLevel { get => curLevel; set => curLevel = value; }
 
     public void SpawnBot(int amount)
     {
         //Bot
-        for (int i = 0; i < amount - 1; i++)
+        for (int i = 0; i < amount-1; i++)
         {
-            GameObject bot = ObjectPoolManager.Instance.SpawnFromPool(PoolType.Bot, CurLevel.SpawnPoint[i]);
+            Bot bot = SimplePool.Spawn<Bot>(PoolType.Bot, CurLevel.SpawnPoint[i].position, Quaternion.identity);
         }
     }
 
-    private void HandleBotDeath(Character bot)
+    public void HandleBotDeath(Character bot)
     {
         StartCoroutine(RespawnBotAfterDelay(curLevel.respawnPoint, 3f));
     }
@@ -37,7 +33,7 @@ public class BotManger : GenericSingleton<BotManger>
     {
         yield return new WaitForSeconds(delay);
 
-        GameObject newBot = ObjectPoolManager.Instance.SpawnFromPool(PoolType.Bot, pos);
+        Bot bot = SimplePool.Spawn<Bot>(PoolType.Bot, pos.position, Quaternion.identity);
 
     }
 
