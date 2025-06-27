@@ -20,7 +20,6 @@ public class EquipmentManager : GenericSingleton<EquipmentManager>
         return weaponSOs.Where(_ => _.IsEquipped == true & _.Unlock == true).FirstOrDefault();
     }
 
-
     public void Equip(WeaponType weaponType)
     {
 

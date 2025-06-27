@@ -11,6 +11,10 @@ public class BotManger : GenericSingleton<BotManger>
     private void OnEnable()
     {
         Character.OnBotDeath += HandleBotDeath;
+    } 
+    private void DisEnable()
+    {
+        Character.OnBotDeath -= HandleBotDeath;
     }
 
     public Level CurLevel { get => curLevel; set => curLevel = value; }

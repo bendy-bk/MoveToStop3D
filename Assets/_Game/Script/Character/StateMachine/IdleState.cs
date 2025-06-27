@@ -9,7 +9,7 @@ public class IdleState : IState<Bot>
     {
         t.ChangeAnim(Constants.ANIM_IDLE);
         timer = 0f;
-        maxTimer = Random.Range(3, 7);
+        maxTimer = Random.Range(2, 5);
     }
 
     public void OnExcute(Bot t)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class BulletBase : GameUnit
@@ -8,36 +9,20 @@ public class BulletBase : GameUnit
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected float speed;
 
-    protected Character characterOwner;
-    protected Character targetCharacter; 
-    protected bool isFlying = false;
-    protected Vector3 directionAttack;
+    [SerializeField] protected Character characterOwner;
+    [SerializeField] protected Character characterTarget;
+    [SerializeField] protected Vector3 directionAttack;
 
-    public bool IsFlying { get => isFlying; set => isFlying = value; }
+    [SerializeField] protected Vector3 targetPosition;
 
-    public void SetTargetFly(Character owner, Character target, Vector3 dir)
+    private void Start()
     {
-        targetCharacter = target;
-        characterOwner = owner;
-        directionAttack = dir;
-        IsFlying = true;
+        targetPosition = characterTarget.TF.position;
     }
 
-    private void OnTriggerEnter(Collider other)
+    void Update()
     {
-        if (other.CompareTag("Player"))
-        {
-            Character c = other.GetComponent<Character>();
-            if (c != null)
-            {
-                characterOwner?.OnHit();
-                c.OnDeath();
-                // Xoá khỏi danh sách tấn công của người bắn
-                characterOwner?.RemoveTarget(targetCharacter);
-            }
-
-            OnDespawn();
-        }
+        MoveToTarget();
     }
 
     public override void OnInit()
@@ -46,10 +31,43 @@ public class BulletBase : GameUnit
 
     public override void OnDespawn()
     {
-        IsFlying = false;
         characterOwner.IsAttacking = false;
         characterOwner.IsThrowing = false;
         SimplePool.Despawn(this);
     }
 
+    public void MoveToTarget()
+    {
+        // Di chuyển theo hướng cố định
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+
+        if (Vector3.Distance(transform.position, targetPosition) <= 0.01f)
+        {
+            OnDespawn();
+        }
+    }
+
+    public void SetTargetFly(Character owner, Character target, Vector3 dir)
+    {
+        characterTarget = target;
+        characterOwner = owner;
+        directionAttack = dir;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Character c = other.GetComponent<Character>();
+
+            // Tránh tự va chạm chính mình
+            if (c != null && c != characterOwner)
+            {
+                characterOwner?.OnHit(); // Gây sát thương
+                c.OnDeath();             // Mục tiêu chết
+                characterOwner?.RemoveTarget(characterTarget); // Xoá khỏi danh sách
+                OnDespawn();
+            }
+        }
+    }
 }

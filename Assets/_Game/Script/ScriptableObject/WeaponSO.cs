@@ -14,6 +14,7 @@ public class WeaponSO : ScriptableObject
     [SerializeField] private GameObject prefabVS;
     [SerializeField] private GameUnit prefab;
     [SerializeField] private int damage;
+    [SerializeField] private int price;
     [SerializeField] private float attackSpeed;
     [SerializeField] private float range;
     [SerializeField] private bool unlock;
@@ -30,6 +31,7 @@ public class WeaponSO : ScriptableObject
     public bool IsEquipped { get => isEquipped; set => isEquipped = value; }
     public GameObject PrefabVS { get => prefabVS; set => prefabVS = value; }
     public PoolType PoolType { get => poolType; set => poolType = value; }
+    public int Price { get => price; set => price = value; }
 }
 public enum WeaponType
 {

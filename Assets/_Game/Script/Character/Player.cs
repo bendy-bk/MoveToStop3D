@@ -4,6 +4,7 @@ public class Player : Character
 {
     [SerializeField] private float speed = 5;
     
+
     private void Update()
     {
         if (GameManager.Instance.IsState(GameState.Gameplay))
@@ -24,6 +25,13 @@ public class Player : Character
             if (Model != null)
                 Model.forward = direction;
             ChangeAnim(Constants.ANIM_RUN);
+
+            // Nếu đang di chuyển mà có coroutine -> stop nó
+            if (throwCoroutine != null)
+            {
+                StopCoroutine(throwCoroutine);
+                throwCoroutine = null;
+            }
 
         }
         else if (JoystickControl.direct == Vector3.zero)

@@ -7,7 +7,6 @@ public class LevelManager : GenericSingleton<LevelManager>
     public Bot botPrefab;
     public Player player;
 
-
     private int levelIndex;
     private Level currentLevel;
 
@@ -36,10 +35,8 @@ public class LevelManager : GenericSingleton<LevelManager>
 
         //Khoi tao player
         player.OnInit();
-
         BotManger.Instance.CurLevel = currentLevel;
         BotManger.Instance.SpawnBot(CharacterAmount);
-
         UIManager.Instance.OpenUI<JoystickControl>();
     }
 
@@ -78,7 +75,6 @@ public class LevelManager : GenericSingleton<LevelManager>
 
     public void OnNextLevel()
     {
-        Character.OnBotDeath -= BotManger.Instance.HandleBotDeath;
         GameManager.Instance.ChangeState(GameState.Gameplay);
         UIManager.Instance.CloseUI<JoystickControl>();
         levelIndex++;
@@ -94,8 +90,7 @@ public class LevelManager : GenericSingleton<LevelManager>
         {
             GameManager.Instance.ChangeState(GameState.Pause);
             UIManager.Instance.CloseUI<JoystickControl>();
-            UIManager.Instance.OpenUI<VictoryUI>();
-            
+            UIManager.Instance.OpenUI<VictoryUI>();      
         }
     }
 
@@ -108,7 +103,6 @@ public class LevelManager : GenericSingleton<LevelManager>
 
     internal void Lose()
     {
-
         GameManager.Instance.ChangeState(GameState.Pause);
         UIManager.Instance.OpenUI<LoseUI>();
         UIManager.Instance.CloseUI<JoystickControl>();

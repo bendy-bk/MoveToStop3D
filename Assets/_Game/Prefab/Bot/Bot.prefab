@@ -464,17 +464,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolType: 0
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
   model: {fileID: 1755928519684317599}
   character: {fileID: 7616363632228278123}
-  anim: {fileID: 6640850996731898487}
-  totalKill: 0
   throwPoint: {fileID: 5772881307468452824}
+  anim: {fileID: 6640850996731898487}
   textKill: {fileID: 4486246453393374459}
+  totalKill: 0
+  timedelay: 0.8
   size: 5
-  radius: 0
   isAttacking: 0
   isMoving: 0
   isThrowing: 0
@@ -527,7 +524,7 @@ Transform:
   m_GameObject: {fileID: 8873488577340255891}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.067, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

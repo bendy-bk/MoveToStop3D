@@ -8,15 +8,15 @@ public class AttackState : IState<Bot>
 
     public void OnExcute(Bot t)
     {
-        if (t.CharacterCount > 0)
-        {
-            t.IsAttacking = false;
-            t.Attack();
-        }
-        else
-        {
-            t.ChangeState(new PatrolState());
-        }
+        //if (t.CharacterCount > 0)
+        //{
+        //    t.IsAttacking = true;
+        //    t.Attack();
+        //}
+        //else
+        //{
+        //    t.ChangeState(new PatrolState());
+        //}
     }
 
     public void OnExit(Bot t)

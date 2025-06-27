@@ -27,7 +27,6 @@ public class Bot : Character
         Instantiate(c, ThrowPoint.position, Quaternion.identity, ThrowPoint);
     }
 
-    
     private void Update()
     {
         if (GameManager.Instance.IsState(GameState.Gameplay) && currentState != null)
