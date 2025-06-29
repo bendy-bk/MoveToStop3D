@@ -5,5 +5,9 @@
     public const string ANIM_DANCE = "dance";
     public const string ANIM_ATTACK = "attack";
     public const string ANIM_DEAD = "dead";
+
+    public const string PLAYERPREF_LEVEL = "Level";
+
+
 }
 

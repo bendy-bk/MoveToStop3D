@@ -62,6 +62,8 @@
   <ItemGroup>
     <Compile Include="Assets\_Game\Script\Character\StateMachine\PatrolState.cs" />
     <Compile Include="Assets\_Game\Script\UI\LoseUI.cs" />
+    <Compile Include="Assets\Player Prefs Editor\SimpleEncryption.cs" />
+    <Compile Include="Assets\_Game\Script\Weapon\Weapon.cs" />
     <Compile Include="Assets\_Game\Script\Manager\LevelManager.cs" />
     <Compile Include="Assets\JoystickPack\Scripts\JoystickControl.cs" />
     <Compile Include="Assets\_Pool\Pool\PoolController.cs" />
@@ -71,6 +73,8 @@
     <Compile Include="Assets\_Game\Script\Manager\GameManager.cs" />
     <Compile Include="Assets\_Game\Script\Level\Level.cs" />
     <Compile Include="Assets\_Game\Script\UI\VictoryUI.cs" />
+    <Compile Include="Assets\_Game\Script\UI\WeaponShopItemUI.cs" />
+    <Compile Include="Assets\_Game\Script\UI\ShopUI.cs" />
     <Compile Include="Assets\_Game\Script\ScriptableObject\WeaponSO.cs" />
     <Compile Include="Assets\_Game\Script\UI\UIManger.cs" />
     <Compile Include="Assets\_Game\Script\Weapon\Hammer.cs" />
@@ -88,7 +92,7 @@
     <Compile Include="Assets\_Game\Script\Character\StateMachine\IState.cs" />
     <Compile Include="Assets\_Game\Script\Manager\BotManger.cs" />
     <Compile Include="Assets\_Game\Script\Character\StateMachine\AttackState.cs" />
-    <Compile Include="Assets\_Game\Script\Weapon\WeaponBase.cs" />
+    <Compile Include="Assets\Player Prefs Editor\PlayerPrefsUtility.cs" />
     <Compile Include="Assets\_Game\Script\UI\MainUI.cs" />
   </ItemGroup>
   <ItemGroup>

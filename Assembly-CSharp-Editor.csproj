@@ -61,6 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Bitgem\Bitgem\Cube_World\_Materials\URP_Multicolor_Material\Multicolor shader related\Editor\TextureConverter.cs" />
+    <Compile Include="Assets\Player Prefs Editor\Editor\PlayerPrefsEditor.cs" />
+    <Compile Include="Assets\Player Prefs Editor\Editor\Mac\Plist.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

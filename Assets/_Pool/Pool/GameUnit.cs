@@ -22,7 +22,5 @@ public abstract class GameUnit : MonoBehaviour
 public enum PoolType
 {
     Bot = 0, 
-    Player = 1, 
-    Bullet_Spear = 2,
-    Bullet_Hammer = 3
+    Bullet = 1,
 }

@@ -5,20 +5,47 @@ using UnityEngine;
 public class EquipmentManager : GenericSingleton<EquipmentManager>
 {
 
-    [SerializeField] private List<WeaponSO> weaponSOs = new List<WeaponSO>();
+    [SerializeField] private List<WeaponSO> weaponSOs = new();
 
-    public List<WeaponSO> WeaponSOs { get => weaponSOs; set => weaponSOs = value; }
+    //ListWeapon owner
+    [SerializeField] private List<Weapon> weapons = new List<Weapon>();
 
+    public List<WeaponSO> WeaponSOs => weaponSOs;
 
-    public WeaponSO GetWeapon(WeaponType type)
+    public List<Weapon> Weapons { get => weapons; set => weapons = value; }
+
+    private void Awake()
     {
-        return weaponSOs.Where(_ => _.WeaponType == type).FirstOrDefault();
+        weaponSOs = Resources.LoadAll<WeaponSO>("WeaponSO").ToList();
+        //To do: load file
+        GetListWeaponUnlock();
     }
 
-    public WeaponSO GetWeaponEquip()
+
+    public void GetListWeaponUnlock()
     {
-        return weaponSOs.Where(_ => _.IsEquipped == true & _.Unlock == true).FirstOrDefault();
+        foreach (var weaponso in WeaponSOs)
+        {
+            if(weaponso.Unlock)
+            {
+                Weapon w = new Weapon(weaponso);
+                Weapons.Add(w);
+            }
+        }
     }
+
+    public Weapon GetWeaponEquip()
+    {
+        foreach (var w in Weapons)
+        {
+            if (w.IsEquipped)
+            {
+                return w;
+            }
+        }
+        return null; // Trường hợp không có vũ khí nào được trang bị
+    }
+
 
     public void Equip(WeaponType weaponType)
     {

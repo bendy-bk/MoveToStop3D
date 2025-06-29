@@ -7,11 +7,9 @@ using UnityEngine;
 [Serializable]
 public class WeaponSO : ScriptableObject
 {
-    [SerializeField] PoolType poolType;
     [SerializeField] private WeaponType weaponType;
     [SerializeField] private string weaponName;
     [SerializeField] private Sprite icon;
-    [SerializeField] private GameObject prefabVS;
     [SerializeField] private GameUnit prefab;
     [SerializeField] private int damage;
     [SerializeField] private int price;
@@ -29,13 +27,11 @@ public class WeaponSO : ScriptableObject
     public WeaponType WeaponType { get => weaponType; set => weaponType = value; }
     public bool Unlock { get => unlock; set => unlock = value; }
     public bool IsEquipped { get => isEquipped; set => isEquipped = value; }
-    public GameObject PrefabVS { get => prefabVS; set => prefabVS = value; }
-    public PoolType PoolType { get => poolType; set => poolType = value; }
     public int Price { get => price; set => price = value; }
 }
 public enum WeaponType
 {
-    Arrow,
+    Spear,
     Hammer,
     Boomerang,
 }

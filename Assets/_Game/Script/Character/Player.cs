@@ -2,9 +2,9 @@
 
 public class Player : Character
 {
+    [SerializeField] GameObject unit;
     [SerializeField] private float speed = 5;
     
-
     private void Update()
     {
         if (GameManager.Instance.IsState(GameState.Gameplay))
@@ -38,7 +38,7 @@ public class Player : Character
         {
             IsMoving = false;
 
-            if (CharacterCount > 0 && !IsAttacking && !IsThrowing)
+            if (CharacterCount > 0 && !IsAttacking)
             {
                 Attack();
             }
@@ -51,13 +51,10 @@ public class Player : Character
 
     public override void OnInit()
     {
-        base.OnInit();
+        WeaponEquip = EquipmentManager.Instance.GetWeaponEquip();
 
-        WeaponSpawnVS = EquipmentManager.Instance.GetWeaponEquip().PrefabVS;
-
-        var weaponObj = Instantiate(WeaponSpawnVS, ThrowPoint);
-        weaponObj.transform.localPosition = Vector3.zero;
-        weaponObj.transform.localRotation = Quaternion.identity;
+        //SimplePool.Spawn<Weapon>(PoolType.Bullet, ThrowPoint.position, Quaternion.identity);
+        //Instantiate(unit, ThrowPoint.position, Quaternion.identity, ThrowPoint);
 
 
     }

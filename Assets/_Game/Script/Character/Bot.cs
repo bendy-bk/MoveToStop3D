@@ -4,8 +4,6 @@ using UnityEngine.AI;
 
 public class Bot : Character
 {
-    public GameObject c;
-
     public NavMeshAgent agent;
 
     private Vector3 destionation;
@@ -22,9 +20,9 @@ public class Bot : Character
     public override void OnInit()
     {
         base.OnInit();
-        ChangeState(new IdleState());
+        ChangeState(new PatrolState());
         // To do : random weapon for bot
-        Instantiate(c, ThrowPoint.position, Quaternion.identity, ThrowPoint);
+        //Instantiate(weapon, ThrowPoint.position, Quaternion.identity, ThrowPoint);
     }
 
     private void Update()

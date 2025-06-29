@@ -14,8 +14,7 @@ public class LevelManager : GenericSingleton<LevelManager>
 
     private void Awake()
     {
-        PlayerPrefs.SetInt("Level", 0);
-        //levelIndex = PlayerPrefs.GetInt("Level", 0);
+        levelIndex = PlayerPrefs.GetInt(Constants.PLAYERPREF_LEVEL, 0);
     }
 
     public void Start()
@@ -78,7 +77,8 @@ public class LevelManager : GenericSingleton<LevelManager>
         GameManager.Instance.ChangeState(GameState.Gameplay);
         UIManager.Instance.CloseUI<JoystickControl>();
         levelIndex++;
-        PlayerPrefs.SetInt("Level", levelIndex);
+        PlayerPrefs.SetInt(Constants.PLAYERPREF_LEVEL, levelIndex); 
+        PlayerPrefs.Save();
         OnReset();
         LoadLevel(levelIndex);
         OnInit();
