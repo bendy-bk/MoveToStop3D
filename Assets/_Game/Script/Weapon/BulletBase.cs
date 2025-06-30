@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BulletBase : GameUnit
@@ -9,15 +10,15 @@ public class BulletBase : GameUnit
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected float speed;
 
-    [SerializeField] protected Character characterOwner;
-    [SerializeField] protected Character characterTarget;
-    [SerializeField] protected Vector3 directionAttack;
-
-    [SerializeField] protected Transform targetPosition;
+    protected Character characterOwner;
+    protected Character characterTarget;
+    protected Vector3 directionAttack;
+    protected Vector3 targetPosition;
 
     void Update()
     {
         MoveToTarget();
+        RotateToTarget();
     }
 
     public override void OnInit()
@@ -27,27 +28,33 @@ public class BulletBase : GameUnit
     public override void OnDespawn()
     {
         characterOwner.IsAttacking = false;
-        SimplePool.Despawn(this);
+        gameObject.SetActive(false);
+        characterOwner.FixedTarget = Vector3.zero;
+        //SimplePool.Despawn(this);
+    }
+
+    protected virtual void RotateToTarget()
+    {
+        // Mặc định không làm gì
     }
 
     public void MoveToTarget()
     {
+        Debug.Log(targetPosition);
         // Di chuyển theo hướng cố định
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition.position, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 
-        if (Vector3.Distance(transform.position, targetPosition.position) <= 0.01f)
+        if (Vector3.Distance(transform.position, targetPosition) <= 0.01f)
         {
             OnDespawn();
         }
     }
 
-    public void SetTargetFly(Character owner, Character target, Vector3 dir)
+    public void SetTargetFly(Character owner, Character target, Vector3 pos)
     {
         characterTarget = target;
         characterOwner = owner;
-        directionAttack = dir;
-
-        targetPosition = target.TF;
+        targetPosition = pos;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -63,6 +70,7 @@ public class BulletBase : GameUnit
                 c.OnDeath();             // Mục tiêu chết
                 characterOwner?.RemoveTarget(characterTarget); // Xoá khỏi danh sách
                 OnDespawn();
+                
             }
         }
     }

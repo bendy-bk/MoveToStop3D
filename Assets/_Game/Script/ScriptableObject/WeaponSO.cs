@@ -11,6 +11,7 @@ public class WeaponSO : ScriptableObject
     [SerializeField] private string weaponName;
     [SerializeField] private Sprite icon;
     [SerializeField] private GameUnit prefab;
+    [SerializeField] private BulletBase bullet;
     [SerializeField] private int damage;
     [SerializeField] private int price;
     [SerializeField] private float attackSpeed;
@@ -28,6 +29,7 @@ public class WeaponSO : ScriptableObject
     public bool Unlock { get => unlock; set => unlock = value; }
     public bool IsEquipped { get => isEquipped; set => isEquipped = value; }
     public int Price { get => price; set => price = value; }
+    public BulletBase Bullet { get => bullet; set => bullet = value; }
 }
 public enum WeaponType
 {

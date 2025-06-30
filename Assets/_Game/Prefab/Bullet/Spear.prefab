@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6972661332470638388}
   - component: {fileID: 5211245396203897434}
   - component: {fileID: 3806661404486085444}
-  - component: {fileID: -3494711869812399825}
+  - component: {fileID: -6716437551400455676}
   m_Layer: 0
   m_Name: Spear
   m_TagString: Untagged
@@ -83,7 +83,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-3494711869812399825
+--- !u!114 &-6716437551400455676
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,13 +92,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7422030507493254686}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a632441907041f42bea1a6d9fa14f1c, type: 3}
+  m_Script: {fileID: 11500000, guid: bf7e80cd774ae4744ba5f07e06ae23e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   poolType: 1
-  weaponType: 0
-  preFap: {fileID: -3494711869812399825}
-  isEquipped: 0
+  rb: {fileID: 3806661404486085444}
+  speed: 10
 --- !u!1001 &5376887167754326486
 PrefabInstance:
   m_ObjectHideFlags: 0

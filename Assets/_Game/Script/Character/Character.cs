@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -17,6 +16,7 @@ public class Character : GameUnit
 
     [Header("Target")]
     private List<Character> characters = new();
+    private Vector3 fixedTarget ;
 
     [SerializeField] private Animator anim;
     [SerializeField] private TextMeshPro textKill;
@@ -44,6 +44,7 @@ public class Character : GameUnit
     public Character TargetCharacter => characters.Count > 0 ? characters[0] : null;
 
     public Weapon WeaponEquip { get => weaponEquip; set => weaponEquip = value; }
+    public Vector3 FixedTarget { get => fixedTarget; set => fixedTarget = value; }
 
     public override void OnInit() {
         
@@ -65,19 +66,28 @@ public class Character : GameUnit
     public virtual void OnDeath()
     {
         ChangeAnim(Constants.ANIM_DEAD);
+        StartCoroutine(HandleDeath());
+
+    }
+    private IEnumerator HandleDeath()
+    {
+        yield return new WaitForSeconds(1f);
+
         if (this is Player)
         {
             LevelManager.Instance.Lose();
         }
-        if (this is Bot)
+        else if (this is Bot)
         {
-            OnBotDeath?.Invoke(this); // Gửi sự kiện
-            characters.Remove(this); // Cẩn thận nếu dùng trong list chung
-            SimplePool.Despawn(this);
+            OnBotDeath?.Invoke(this);
+            characters.Remove(this);
+            //SimplePool.Despawn(this);
+            gameObject.SetActive(false);
             BotManger.Instance.Bots.Remove(this as Bot);
-            this.CircleTarget.SetActive(false);
-        }
 
+            if (CircleTarget != null)
+                CircleTarget.SetActive(false);
+        }
     }
 
     public void UpSize()
@@ -91,20 +101,28 @@ public class Character : GameUnit
     }
 
     public void Attack()
-    {
+    {      
         ChangeAnim(Constants.ANIM_ATTACK);
-
         // Nếu chưa có coroutine thì mới bắt đầu
         if (throwCoroutine == null)
         {
             throwCoroutine = StartCoroutine(DelayThrow());
         }
-
+    
     }
 
     public void Throw()
     {
-        
+        if (characters.Count > 0 && !IsAttacking && !IsMoving) {
+            isAttacking = true;
+            FixedTarget = TargetCharacter.TF.position;
+            weaponEquip.SetCharacterowner(this, TargetCharacter, FixedTarget);
+            WeaponEquip.Shoot();
+        } else
+        {
+            isAttacking = false;
+            return;
+        }
 
     }
 
@@ -117,7 +135,6 @@ public class Character : GameUnit
     {
         yield return new WaitForSeconds(timedelay);
         Throw();
-
         throwCoroutine = null; // reset lại
     }
 

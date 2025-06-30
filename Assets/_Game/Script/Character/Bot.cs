@@ -23,6 +23,10 @@ public class Bot : Character
         ChangeState(new PatrolState());
         // To do : random weapon for bot
         //Instantiate(weapon, ThrowPoint.position, Quaternion.identity, ThrowPoint);
+
+
+        WeaponEquip = EquipmentManager.Instance.GetWeaponEquip();
+        Instantiate(WeaponEquip.PreFap, ThrowPoint.position, Quaternion.identity, ThrowPoint);
     }
 
     private void Update()

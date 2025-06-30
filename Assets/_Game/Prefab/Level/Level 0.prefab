@@ -177,7 +177,6 @@ MonoBehaviour:
   - {fileID: 3761772338714830770}
   navMeshData: {fileID: 23800000, guid: 229385f8c18bb31409e3a07cb8ba71f8, type: 2}
   startPoint: {fileID: 5927057287145446979}
-  respawnPoint: {fileID: 1033001133150870976}
   botAmout: 1
   targetKillBot: 100
 --- !u!1 &5072365747185557991

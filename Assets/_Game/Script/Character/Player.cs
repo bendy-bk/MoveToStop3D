@@ -2,7 +2,6 @@
 
 public class Player : Character
 {
-    [SerializeField] GameObject unit;
     [SerializeField] private float speed = 5;
     
     private void Update()
@@ -53,9 +52,10 @@ public class Player : Character
     {
         WeaponEquip = EquipmentManager.Instance.GetWeaponEquip();
 
-        //SimplePool.Spawn<Weapon>(PoolType.Bullet, ThrowPoint.position, Quaternion.identity);
-        //Instantiate(unit, ThrowPoint.position, Quaternion.identity, ThrowPoint);
+        Instantiate(WeaponEquip.PreFap, ThrowPoint.position, Quaternion.identity, ThrowPoint);
 
+        //GameUnit u = SimplePool.Spawn<Weapon>(PoolType.Bullet, ThrowPoint.position, Quaternion.identity);
+        //u.transform.SetParent(ThrowPoint);
 
     }
 

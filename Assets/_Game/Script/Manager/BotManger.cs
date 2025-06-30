@@ -49,7 +49,6 @@ public class BotManger : GenericSingleton<BotManger>
         }
     }
 
-
     private Transform GetFreeSpawnPoint()
     {
         foreach (var point in curLevel.SpawnPoint)

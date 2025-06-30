@@ -459,7 +459,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6586094308371559331}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90bcca5c95379c0489a43b594d3a8832, type: 3}
   m_Name: 
@@ -476,7 +476,6 @@ MonoBehaviour:
   isAttacking: 0
   isMoving: 0
   CircleTarget: {fileID: 7170335699277386900}
-  weapon: {fileID: 919132149155446097, guid: 8c7c0595facbaef42ab4ce92924a0786, type: 3}
   agent: {fileID: 5829900419593393141}
 --- !u!195 &5829900419593393141
 NavMeshAgent:

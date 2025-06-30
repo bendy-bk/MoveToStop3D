@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3678993916936657912}
   - component: {fileID: 2318957032982101646}
   - component: {fileID: 8222063357819289128}
-  - component: {fileID: -8344864558218216346}
+  - component: {fileID: -660368573573581181}
   m_Layer: 0
   m_Name: Hammer
   m_TagString: Untagged
@@ -54,8 +54,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.25980276, y: 0.16928524, z: 0.23988035}
-  m_Center: {x: 0.07695159, y: -0.39899728, z: 0.0136850625}
+  m_Size: {x: 0.3206764, y: 0.26086426, z: 0.36126858}
+  m_Center: {x: -0.031514347, y: 0.26833165, z: 0.05135546}
 --- !u!54 &8222063357819289128
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -83,7 +83,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-8344864558218216346
+--- !u!114 &-660368573573581181
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,13 +92,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5751923517183809609}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a632441907041f42bea1a6d9fa14f1c, type: 3}
+  m_Script: {fileID: 11500000, guid: 406d5baaee1dcd746aa06bd92613996e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   poolType: 1
-  weaponType: 1
-  preFap: {fileID: -8344864558218216346}
-  isEquipped: 0
+  rb: {fileID: 8222063357819289128}
+  speed: 10
 --- !u!1001 &7073179437808865867
 PrefabInstance:
   m_ObjectHideFlags: 0
