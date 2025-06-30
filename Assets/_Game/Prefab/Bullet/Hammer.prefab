@@ -95,9 +95,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 406d5baaee1dcd746aa06bd92613996e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolType: 1
+  poolType: 2
   rb: {fileID: 8222063357819289128}
   speed: 10
+  rotateSpeed: 900
 --- !u!1001 &7073179437808865867
 PrefabInstance:
   m_ObjectHideFlags: 0

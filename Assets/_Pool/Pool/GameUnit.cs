@@ -19,8 +19,3 @@ public abstract class GameUnit : MonoBehaviour
 
 }
 
-public enum PoolType
-{
-    Bot = 0, 
-    Bullet = 1,
-}

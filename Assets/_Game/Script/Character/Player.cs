@@ -52,8 +52,8 @@ public class Player : Character
     {
         WeaponEquip = EquipmentManager.Instance.GetWeaponEquip();
 
-        Instantiate(WeaponEquip.PreFap, ThrowPoint.position, Quaternion.identity, ThrowPoint);
-
+        GameUnit u = Instantiate(WeaponEquip, Vector3.zero, Quaternion.identity, ThrowPoint);
+        u.TF.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         //GameUnit u = SimplePool.Spawn<Weapon>(PoolType.Bullet, ThrowPoint.position, Quaternion.identity);
         //u.transform.SetParent(ThrowPoint);
 

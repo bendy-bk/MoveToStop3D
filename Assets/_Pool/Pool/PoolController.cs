@@ -31,3 +31,9 @@ public class PoolAmount
 }
 
 
+public enum PoolType
+{
+    Bot = 0,
+    Bullet_Spear = 1,
+    Bullet_Hammer = 2,
+}

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public class Weapon : GameUnit
 
     private GameUnit preFap;
 
-    private bool isEquipped;
+    [SerializeField] private bool isEquipped;
 
     private Character characterOwner;
 
@@ -24,25 +25,33 @@ public class Weapon : GameUnit
     public bool IsEquipped { get => isEquipped; set => isEquipped = value; }
     public Character CharacterOwner { get => characterOwner; set => characterOwner = value; }
     public Character Target { get => target; set => target = value; }
+    public BulletBase BulletBase { get => bulletBase; set => bulletBase = value; }
 
     public Weapon(WeaponSO wso)
     {
         WeaponType = wso.WeaponType;
         PreFap = wso.Prefab;
         IsEquipped = wso.IsEquipped;
-        bulletBase = wso.Bullet;
+        BulletBase = wso.Bullet;
     }
 
     public Weapon()
     {
     }
 
-    public void Shoot()
+    public async void Shoot()
     {
-        BulletBase bullet = Instantiate(bulletBase, CharacterOwner.ThrowPoint.position, Quaternion.identity);
 
+        //BulletBase bullet = Instantiate(bulletBase, CharacterOwner.ThrowPoint.position, Quaternion.identity);
+        Debug.Log("Player:" + CharacterOwner.ThrowPoint.position);
+        var bullet = SimplePool.Spawn<BulletBase>(BulletBase.poolType, CharacterOwner.ThrowPoint.position, Quaternion.identity);
+        bullet.TF.rotation = Quaternion.Euler(90,0,0);
+        bullet.gameObject.SetActive(false);
+        await Task.Delay(100);
+        bullet.TF.position = CharacterOwner.ThrowPoint.position;
+        bullet.gameObject.SetActive(true);
+        Debug.Log("Bullet:" + bullet.TF.position);
         bullet.SetTargetFly(CharacterOwner, target, targetPos);
-
 
     }
 
@@ -56,11 +65,11 @@ public class Weapon : GameUnit
 
     public override void OnInit()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public override void OnDespawn()
     {
-        throw new System.NotImplementedException();
+        
     }
 }

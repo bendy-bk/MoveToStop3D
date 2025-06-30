@@ -244,6 +244,7 @@ MonoBehaviour:
   poolType: 1
   weaponType: 0
   bulletBase: {fileID: -6716437551400455676, guid: f697aabb69f77254fb3fb56b3430c01e, type: 3}
+  isEquipped: 0
 --- !u!1 &5546040037130208506
 GameObject:
   m_ObjectHideFlags: 0

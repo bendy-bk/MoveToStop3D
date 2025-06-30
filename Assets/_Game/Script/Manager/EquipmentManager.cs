@@ -18,7 +18,7 @@ public class EquipmentManager : GenericSingleton<EquipmentManager>
     {
         weaponSOs = Resources.LoadAll<WeaponSO>("WeaponSO").ToList();
         //To do: load file
-        GetListWeaponUnlock();
+        //GetListWeaponUnlock();
     }
 
 

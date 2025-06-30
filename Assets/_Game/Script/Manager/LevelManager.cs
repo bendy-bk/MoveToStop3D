@@ -60,7 +60,7 @@ public class LevelManager : GenericSingleton<LevelManager>
 
     public void OnReset()
     {
-        player.totalKill = 0;
+        player.TotalKill = 0;
     }
 
     public void OnRetry()

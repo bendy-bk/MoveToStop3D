@@ -20,8 +20,8 @@ public class Character : GameUnit
 
     [SerializeField] private Animator anim;
     [SerializeField] private TextMeshPro textKill;
-    [SerializeField] public int totalKill = 0;
-    [SerializeField] public float timedelay = 0.6f;
+    [SerializeField] private int totalKill = 0;
+    [SerializeField] private float timedelay = 0.6f;
     [SerializeField] private float size;
 
     [SerializeField] private bool isAttacking = false;
@@ -45,30 +45,27 @@ public class Character : GameUnit
 
     public Weapon WeaponEquip { get => weaponEquip; set => weaponEquip = value; }
     public Vector3 FixedTarget { get => fixedTarget; set => fixedTarget = value; }
+    public int TotalKill { get => totalKill; set => totalKill = value; }
 
-    public override void OnInit() {
-        
-    }
+    public override void OnInit() {}
 
-    public virtual void Move() { }
+    public virtual void Move() {}
 
-    public override void OnDespawn()
-    {
-    }
+    public override void OnDespawn() {}
 
     public void OnHit()
     {
-        totalKill++;
+        TotalKill++;
         UpSize();
-        LevelManager.Instance.CheckWin(totalKill);
+        LevelManager.Instance.CheckWin(TotalKill);
     }
 
     public virtual void OnDeath()
     {
         ChangeAnim(Constants.ANIM_DEAD);
         StartCoroutine(HandleDeath());
-
     }
+
     private IEnumerator HandleDeath()
     {
         yield return new WaitForSeconds(1f);
@@ -78,7 +75,7 @@ public class Character : GameUnit
             LevelManager.Instance.Lose();
         }
         else if (this is Bot)
-        {
+        {          
             OnBotDeath?.Invoke(this);
             characters.Remove(this);
             //SimplePool.Despawn(this);
@@ -96,7 +93,7 @@ public class Character : GameUnit
 
         if (textKill != null)
         {
-            textKill.text = $"{totalKill}";
+            textKill.text = $"{TotalKill}";
         }
     }
 
@@ -113,7 +110,7 @@ public class Character : GameUnit
 
     public void Throw()
     {
-        if (characters.Count > 0 && !IsAttacking && !IsMoving) {
+        if (characters.Count > 0 && !IsMoving) {
             isAttacking = true;
             FixedTarget = TargetCharacter.TF.position;
             weaponEquip.SetCharacterowner(this, TargetCharacter, FixedTarget);
@@ -160,7 +157,7 @@ public class Character : GameUnit
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag(Constants.TAG_PLAYER))
         {
             Character c = other.GetComponent<Character>();
             characters.Add(c);          
@@ -176,12 +173,12 @@ public class Character : GameUnit
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag(Constants.TAG_PLAYER))
         {
             Character exitingCharacter = other.GetComponent<Character>();
             characters.Remove(exitingCharacter); // Remove Character vừa đi ra
             exitingCharacter.CircleTarget.SetActive(false);
-            Debug.Log("Taget remove: " + exitingCharacter.TF.position);
+            //Debug.Log("Taget remove: " + exitingCharacter.TF.position);
         }
     }
 

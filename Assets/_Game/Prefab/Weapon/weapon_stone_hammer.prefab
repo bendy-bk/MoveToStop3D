@@ -75,9 +75,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a632441907041f42bea1a6d9fa14f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolType: 1
+  poolType: 2
   weaponType: 1
   bulletBase: {fileID: -660368573573581181, guid: d975741f867ad7b49b6b896c792c1dd0, type: 3}
+  isEquipped: 1
 --- !u!1 &1315564381351169234
 GameObject:
   m_ObjectHideFlags: 0
