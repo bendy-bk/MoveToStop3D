@@ -3,9 +3,10 @@ using UnityEngine.AI;
 
 public class LevelManager : GenericSingleton<LevelManager>
 {
-    public Level[] levelPrefabs;
-    public Bot botPrefab;
-    public Player player;
+    [SerializeField] private Level[] levelPrefabs;
+    [SerializeField] private Bot botPrefab;
+    [SerializeField] private Player player;
+    [SerializeField] private Transform placeGameplay;
 
     private int levelIndex;
     private Level currentLevel;
@@ -48,7 +49,7 @@ public class LevelManager : GenericSingleton<LevelManager>
 
         if (level < levelPrefabs.Length)
         {
-            currentLevel = Instantiate(levelPrefabs[level]);
+            currentLevel = Instantiate(levelPrefabs[level], placeGameplay);
             //currentLevel.OnInit();
         }
         else
@@ -60,7 +61,10 @@ public class LevelManager : GenericSingleton<LevelManager>
 
     public void OnReset()
     {
+        SimplePool.ReleaseAll();
         player.TotalKill = 0;
+        player.Characters.Clear();
+        BotManger.Instance.Bots.Clear();
     }
 
     public void OnRetry()
@@ -86,9 +90,10 @@ public class LevelManager : GenericSingleton<LevelManager>
 
     internal void CheckWin(int totalKill)
     {
-        if (totalKill >= currentLevel.targetKillBot)
+        if (player.TotalKill >= currentLevel.targetKillBot)
         {
             GameManager.Instance.ChangeState(GameState.Pause);
+            BotManger.Instance.ChangeStateBotNull();
             UIManager.Instance.CloseUI<JoystickControl>();
             UIManager.Instance.OpenUI<VictoryUI>();      
         }
@@ -104,8 +109,11 @@ public class LevelManager : GenericSingleton<LevelManager>
     internal void Lose()
     {
         GameManager.Instance.ChangeState(GameState.Pause);
+        BotManger.Instance.ChangeStateBotNull();
         UIManager.Instance.OpenUI<LoseUI>();
         UIManager.Instance.CloseUI<JoystickControl>();
     }
+
+
 }
 

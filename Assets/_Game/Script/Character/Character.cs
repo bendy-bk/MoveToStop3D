@@ -21,7 +21,7 @@ public class Character : GameUnit
     [SerializeField] private Animator anim;
     [SerializeField] private TextMeshPro textKill;
     [SerializeField] private int totalKill = 0;
-    [SerializeField] private float timedelay = 0.6f;
+    [SerializeField] private float timedelay;
     [SerializeField] private float size;
 
     [SerializeField] private bool isAttacking = false;
@@ -29,23 +29,22 @@ public class Character : GameUnit
     [SerializeField] private GameObject CircleTarget;
 
     private Weapon weaponEquip;
-    private float angleY;
     private string currentAnim;
-    private Vector3 dirAttack;
     protected Coroutine throwCoroutine;
 
-    public int CharacterCount => characters.Count;
+    public int CharacterCount => Characters.Count;
 
     public bool IsAttacking { get => isAttacking; set => isAttacking = value; }
     public bool IsMoving { get => isMoving; set => isMoving = value; }
     public Transform Model { get => model; set => model = value; }
     public Transform ThrowPoint { get => throwPoint; set => throwPoint = value; }
 
-    public Character TargetCharacter => characters.Count > 0 ? characters[0] : null;
+    public Character TargetCharacter => Characters.Count > 0 ? Characters[0] : null;
 
     public Weapon WeaponEquip { get => weaponEquip; set => weaponEquip = value; }
     public Vector3 FixedTarget { get => fixedTarget; set => fixedTarget = value; }
     public int TotalKill { get => totalKill; set => totalKill = value; }
+    public List<Character> Characters { get => characters; set => characters = value; }
 
     public override void OnInit() {}
 
@@ -62,29 +61,34 @@ public class Character : GameUnit
 
     public virtual void OnDeath()
     {
-        ChangeAnim(Constants.ANIM_DEAD);
+        if (this is Player)
+        {
+            GameManager.Instance.ChangeState(GameState.Pause); // 1. Pause trước
+        }
+
+        ChangeAnim(Constants.ANIM_DEAD); // 2. Rồi mới chơi anim
         StartCoroutine(HandleDeath());
     }
 
     private IEnumerator HandleDeath()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f); // 3. Đợi anim chết chơi xong
 
         if (this is Player)
         {
-            LevelManager.Instance.Lose();
+            transform.localScale = Vector3.one * 1.3f;
+            LevelManager.Instance.Lose(); // 4. Gọi Lose UI
         }
         else if (this is Bot)
-        {          
+        {
             OnBotDeath?.Invoke(this);
-            characters.Remove(this);
-            //SimplePool.Despawn(this);
-            gameObject.SetActive(false);
-            BotManger.Instance.Bots.Remove(this as Bot);
-
             if (CircleTarget != null)
                 CircleTarget.SetActive(false);
+
+            BotManger.Instance.Bots.Remove(this as Bot);
+            SimplePool.Despawn(this);
         }
+
     }
 
     public void UpSize()
@@ -105,27 +109,22 @@ public class Character : GameUnit
         {
             throwCoroutine = StartCoroutine(DelayThrow());
         }
-    
+        
     }
 
     public void Throw()
     {
-        if (characters.Count > 0 && !IsMoving) {
-            isAttacking = true;
+        if (Characters.Count > 0 && !IsMoving) {           
             FixedTarget = TargetCharacter.TF.position;
             weaponEquip.SetCharacterowner(this, TargetCharacter, FixedTarget);
             WeaponEquip.Shoot();
+            isAttacking = true;
         } else
         {
             isAttacking = false;
             return;
         }
-
-    }
-
-    public void AngelFly(Vector3 dirAt)
-    {
-        angleY = Mathf.Atan2(dirAt.x, dirAt.z) * Mathf.Rad2Deg;
+        
     }
 
     private IEnumerator DelayThrow()
@@ -133,11 +132,15 @@ public class Character : GameUnit
         yield return new WaitForSeconds(timedelay);
         Throw();
         throwCoroutine = null; // reset lại
+
+        ChangeAnim(Constants.ANIM_IDLE);
+        yield return null;
+
     }
 
     public void RemoveTarget(Character c)
     {
-        characters.Remove(c);
+        Characters.Remove(c);
     }
 
     public void ChangeAnim(string newAnim)
@@ -160,10 +163,10 @@ public class Character : GameUnit
         if (other.CompareTag(Constants.TAG_PLAYER))
         {
             Character c = other.GetComponent<Character>();
-            characters.Add(c);          
+            Characters.Add(c);          
         }
 
-        if (characters.Count > 0 && TargetCharacter is Bot)
+        if (Characters.Count > 0 && TargetCharacter is Bot)
         {
             TargetCharacter.CircleTarget.SetActive(true);
         }
@@ -176,7 +179,7 @@ public class Character : GameUnit
         if (other.CompareTag(Constants.TAG_PLAYER))
         {
             Character exitingCharacter = other.GetComponent<Character>();
-            characters.Remove(exitingCharacter); // Remove Character vừa đi ra
+            Characters.Remove(exitingCharacter); // Remove Character vừa đi ra
             exitingCharacter.CircleTarget.SetActive(false);
             //Debug.Log("Taget remove: " + exitingCharacter.TF.position);
         }

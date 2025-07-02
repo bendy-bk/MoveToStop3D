@@ -14,7 +14,6 @@ public class VictoryUI : UICanvas
         next.onClick.AddListener(NextButton);
     }
 
-
     public void RetryButton()
     {
         LevelManager.Instance.OnRetry();

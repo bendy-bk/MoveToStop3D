@@ -471,7 +471,7 @@ MonoBehaviour:
   anim: {fileID: 6640850996731898487}
   textKill: {fileID: 4486246453393374459}
   totalKill: 0
-  timedelay: 0.8
+  timedelay: 0.55
   size: 5
   isAttacking: 0
   isMoving: 0

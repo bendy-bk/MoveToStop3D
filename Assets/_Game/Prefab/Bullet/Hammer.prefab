@@ -97,7 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolType: 2
   rb: {fileID: 8222063357819289128}
-  speed: 10
+  speed: 18
   rotateSpeed: 900
 --- !u!1001 &7073179437808865867
 PrefabInstance:

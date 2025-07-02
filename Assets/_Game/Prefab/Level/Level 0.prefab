@@ -178,7 +178,7 @@ MonoBehaviour:
   navMeshData: {fileID: 23800000, guid: 229385f8c18bb31409e3a07cb8ba71f8, type: 2}
   startPoint: {fileID: 5927057287145446979}
   botAmout: 1
-  targetKillBot: 100
+  targetKillBot: 2
 --- !u!1 &5072365747185557991
 GameObject:
   m_ObjectHideFlags: 0

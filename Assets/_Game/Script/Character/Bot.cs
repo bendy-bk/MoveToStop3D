@@ -26,7 +26,7 @@ public class Bot : Character
 
 
         WeaponEquip = EquipmentManager.Instance.GetWeaponEquip();
-        Instantiate(WeaponEquip.PreFap, ThrowPoint.position, Quaternion.identity, ThrowPoint);
+        Instantiate(WeaponEquip, ThrowPoint.position, Quaternion.identity, ThrowPoint);
     }
 
     private void Update()

@@ -23,20 +23,21 @@ public class BulletBase : GameUnit
         MoveToTarget();
         RotateToTarget();
     }
-    private void OnEnable()
-    {
-        if (coroutine != null) {
-            StopCoroutine(coroutine);
-        }
-        coroutine = StartCoroutine(HandleDeath());
-    }
-    private IEnumerator HandleDeath()
-    {
-        yield return new WaitForSeconds(3f);
+    //private void OnEnable()
+    //{
+    //    if (coroutine != null) {
+    //        StopCoroutine(coroutine);
+    //    }
+    //    coroutine = StartCoroutine(HandleDeath());
+    //}
 
-        OnDespawn();
+    //private IEnumerator HandleDeath()
+    //{
+    //    yield return new WaitForSeconds(3f);
+
+    //    OnDespawn();
         
-    }
+    //}
 
     public override void OnInit()
     {
@@ -44,7 +45,6 @@ public class BulletBase : GameUnit
 
     public override void OnDespawn()
     {
-        characterOwner.IsAttacking = false;
         characterOwner.FixedTarget = Vector3.zero;
         SimplePool.Despawn(this);
     }
@@ -54,16 +54,8 @@ public class BulletBase : GameUnit
         // Mặc định không làm gì
     }
 
-    public void MoveToTarget()
-    {
-        //Debug.Log(targetPosition);
-        // Di chuyển theo hướng cố định
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-
-        if (Vector3.Distance(transform.position, targetPosition) <= 0.01f)
-        {
-            //OnDespawn();
-        }
+    protected virtual void MoveToTarget()
+    {   
     }
 
     public void SetTargetFly(Character owner, Character target, Vector3 pos)
@@ -81,12 +73,11 @@ public class BulletBase : GameUnit
 
             // Tránh tự va chạm chính mình
             if (c != null && c != characterOwner)
-            {
-                characterOwner?.OnHit();               
-                //c.OnDeath();             // Mục tiêu chết
-                //characterOwner?.RemoveTarget(characterTarget); // Xoá khỏi danh sách
-                OnDespawn();
-                
+            {        
+                characterOwner?.RemoveTarget(characterTarget); // Xoá khỏi danh sách
+                c.OnDeath();// Mục tiêu chết   
+                characterOwner?.OnHit();                                                  
+                OnDespawn();  
             }
         }
     }

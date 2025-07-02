@@ -23,7 +23,6 @@ public static class SimplePool
         }
     }
 
-
     public static T Spawn<T>(PoolType poolType, Vector3 pos, Quaternion rot) where T : GameUnit
     {
         if (!poolInstance.ContainsKey(poolType))
@@ -35,7 +34,6 @@ public static class SimplePool
         return poolInstance[poolType].Spawn(pos, rot) as T;
     }
 
-
     public static void Despawn(GameUnit unit)
     {
         if (!poolInstance.ContainsKey(unit.poolType))
@@ -45,6 +43,44 @@ public static class SimplePool
 
         poolInstance[unit.poolType].Despawn(unit);
     }
+
+    public static void Collect(PoolType poolType)
+    {
+        if (!poolInstance.ContainsKey(poolType))
+        {
+            Debug.Log("Khong co");
+        }
+
+        poolInstance[poolType].Collect();
+
+    }
+
+    public static void CollectAll()
+    {
+        foreach (var pool in poolInstance.Values)
+        {
+            pool.Collect();
+        }
+    }
+
+    public static void Release(PoolType poolType)
+    {
+        if (!poolInstance.ContainsKey(poolType))
+        {
+            Debug.Log("Khong co");
+        }
+
+        poolInstance[poolType].Release();
+    }
+
+    public static void ReleaseAll()
+    {
+        foreach (var pool in poolInstance.Values)
+        {
+            pool.Release();
+        }
+    }
+
 
 }
 
@@ -56,7 +92,6 @@ public class Pool
     Queue<GameUnit> inactives = new Queue<GameUnit>();
     //List chua cac unit dang duoc su dung
     List<GameUnit> actives = new List<GameUnit>();
-
 
     public void PreLoad(GameUnit prefab, int amount, Transform parent)
     {

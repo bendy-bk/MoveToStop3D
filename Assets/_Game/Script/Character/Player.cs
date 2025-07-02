@@ -37,12 +37,13 @@ public class Player : Character
         {
             IsMoving = false;
 
-            if (CharacterCount > 0 && !IsAttacking)
+            if (CharacterCount > 0)
             {
                 Attack();
             }
             else if (CharacterCount == 0)
             {
+                IsAttacking = false;
                 ChangeAnim(Constants.ANIM_IDLE);
             }
         }

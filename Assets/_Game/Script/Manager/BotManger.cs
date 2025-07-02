@@ -41,6 +41,7 @@ public class BotManger : GenericSingleton<BotManger>
         if (spawnPoint != null)
         {
             Bot newBot = SimplePool.Spawn<Bot>(PoolType.Bot, spawnPoint.position, Quaternion.identity);
+            newBot.Characters.Clear();
             Bots.Add(newBot);
         }
         else
@@ -68,6 +69,16 @@ public class BotManger : GenericSingleton<BotManger>
         }
 
         return null; // không có chỗ nào trống
+    }
+
+
+    public void ChangeStateBotNull()
+    {
+        foreach (var item in Bots)
+        {
+            item.StopMove();
+            item.ChangeState(null);
+        }
     }
 
 }
