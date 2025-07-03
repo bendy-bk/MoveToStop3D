@@ -5,7 +5,11 @@ using UnityEngine.UI;
 public class MainUI : UICanvas
 {
     [SerializeField] private Button play;
-    [SerializeField] private Button IAP;
+    [SerializeField] private Button Shop;
+    [SerializeField] private Button Weapon;
+    [SerializeField] private Button LuckySpin;
+    [SerializeField] private Button Setting;
+
     [SerializeField] private TextMeshProUGUI coin;
 
     private void Start()
@@ -17,12 +21,13 @@ public class MainUI : UICanvas
     {
         coin.text = BankSystem.Instance.Coin.ToString();
         play.onClick.AddListener(PlayButton);
-        IAP.onClick.AddListener(IAPcoin);
+        Shop.onClick.AddListener(OpenShop);
     }
     private void OnDisable()
     {
         play.onClick.RemoveListener(PlayButton);
-        IAP.onClick.RemoveListener(IAPcoin);
+        Shop.onClick.RemoveListener(OpenShop);
+
     }
 
 
@@ -33,9 +38,22 @@ public class MainUI : UICanvas
         Close();
     }
 
-    public void IAPcoin()
+    public void OpenShop()
     {
-        BankSystem.Instance.DepositCoin(22);
+
+    }
+    public void OpenWeapon()
+    {
+
+    }
+    public void OpenLuckySpin()
+    {
+
+    }
+
+    public void OpenSetting()
+    {
+
     }
 
 

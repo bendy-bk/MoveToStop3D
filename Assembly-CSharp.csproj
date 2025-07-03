@@ -9,7 +9,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{A7811978-F4C4-E5D4-8863-533AAE8CB4C5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -88,7 +89,6 @@
     <Compile Include="Assets\_Game\Script\GameEvent.cs" />
     <Compile Include="Assets\_Game\Script\Character\Bot.cs" />
     <Compile Include="Assets\AssetStore\NewBehaviourScript.cs" />
-    <Compile Include="Assets\_Game\Script\UserData\CurrencyDataController.cs" />
     <Compile Include="Assets\_Game\Script\UserData\UserData.cs" />
     <Compile Include="Assets\_Pool\Pool\SimplePool.cs" />
     <Compile Include="Assets\_Game\Script\GenericSingleton.cs" />
