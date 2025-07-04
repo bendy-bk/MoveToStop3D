@@ -22,12 +22,17 @@ public class MainUI : UICanvas
         coin.text = BankSystem.Instance.Coin.ToString();
         play.onClick.AddListener(PlayButton);
         Shop.onClick.AddListener(OpenShop);
+        Weapon.onClick.AddListener(OpenWeapon);
+        LuckySpin.onClick.AddListener(OpenLuckySpin);
+        Setting.onClick.AddListener(OpenSetting);
     }
     private void OnDisable()
     {
         play.onClick.RemoveListener(PlayButton);
         Shop.onClick.RemoveListener(OpenShop);
-
+        Weapon.onClick.RemoveListener(OpenWeapon);
+        LuckySpin.onClick.RemoveListener(OpenLuckySpin);
+        Setting.onClick.RemoveListener(OpenSetting);
     }
 
 
@@ -40,10 +45,13 @@ public class MainUI : UICanvas
 
     public void OpenShop()
     {
-
+        UIManager.Instance.OpenUI<ShopUI>();
+        UIManager.Instance.CloseUI<MainUI>();
     }
     public void OpenWeapon()
     {
+        UIManager.Instance.OpenUI<WeaponUI>();
+        UIManager.Instance.CloseUI<MainUI>();
 
     }
     public void OpenLuckySpin()

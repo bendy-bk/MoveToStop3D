@@ -6,7 +6,9 @@ using UnityEngine;
 [Serializable]
 public class ListWeaponSO : ScriptableObject
 {
-    public List<WeaponData> weaponDatas = new List<WeaponData>();
+    [SerializeField] private List<WeaponData> weaponDatas = new List<WeaponData>();
+
+    public List<WeaponData> WeaponDatas { get => weaponDatas; set => weaponDatas = value; }
 }
 
 

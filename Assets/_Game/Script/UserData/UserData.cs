@@ -6,6 +6,6 @@ public class UserData
 {
     public int Coin;
     public int Gem;
-    public List<WeaponType> WeaponTypes;
+    public List<WeaponDTO> weaponDTOs = new();
 }
 

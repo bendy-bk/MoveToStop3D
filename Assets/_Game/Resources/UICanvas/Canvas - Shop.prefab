@@ -268,7 +268,6 @@ GameObject:
   - component: {fileID: 7074689440434424676}
   - component: {fileID: 8453477144104639227}
   - component: {fileID: 236362927205550067}
-  - component: {fileID: 8568803681086004492}
   m_Layer: 5
   m_Name: Canvas - Shop
   m_TagString: Untagged
@@ -359,19 +358,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8568803681086004492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4225877497233518446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7c435d39638d1040875b7dbcf61c909, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsDestroyOnClose: 0
 --- !u!1 &7973421288379808806
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,43 +479,43 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1657439513987167698, guid: 6e447c58417bf694c8ff70e43cefa478, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1657439513987167698, guid: 6e447c58417bf694c8ff70e43cefa478, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1657439513987167698, guid: 6e447c58417bf694c8ff70e43cefa478, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 182.56186
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1657439513987167698, guid: 6e447c58417bf694c8ff70e43cefa478, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 91.28093
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1657439513987167698, guid: 6e447c58417bf694c8ff70e43cefa478, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -58.9731
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2171850128632253233, guid: 6e447c58417bf694c8ff70e43cefa478, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2171850128632253233, guid: 6e447c58417bf694c8ff70e43cefa478, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2171850128632253233, guid: 6e447c58417bf694c8ff70e43cefa478, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 62.001854
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2171850128632253233, guid: 6e447c58417bf694c8ff70e43cefa478, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 213.56279
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2171850128632253233, guid: 6e447c58417bf694c8ff70e43cefa478, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -58.9731
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6102783978881941430, guid: 6e447c58417bf694c8ff70e43cefa478, type: 3}
       propertyPath: m_Pivot.x

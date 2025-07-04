@@ -9,8 +9,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{A7811978-F4C4-E5D4-8863-533AAE8CB4C5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -67,6 +66,7 @@
     <Compile Include="Assets\Player Prefs Editor\SimpleEncryption.cs" />
     <Compile Include="Assets\_Game\Script\Weapon\Weapon.cs" />
     <Compile Include="Assets\_Game\Script\Manager\LevelManager.cs" />
+    <Compile Include="Assets\_Game\Script\ScriptableObject\ListPackCoin.cs" />
     <Compile Include="Assets\_Game\Script\UserData\SaveSystem.cs" />
     <Compile Include="Assets\_Game\Script\UserData\UserDataManager.cs" />
     <Compile Include="Assets\JoystickPack\Scripts\JoystickControl.cs" />
@@ -78,7 +78,6 @@
     <Compile Include="Assets\_Game\Script\Manager\GameManager.cs" />
     <Compile Include="Assets\_Game\Script\Level\Level.cs" />
     <Compile Include="Assets\_Game\Script\UI\VictoryUI.cs" />
-    <Compile Include="Assets\_Game\Script\UI\WeaponShopItemUI.cs" />
     <Compile Include="Assets\_Game\Script\UI\ShopUI.cs" />
     <Compile Include="Assets\_Game\Script\UserData\BankSystem.cs" />
     <Compile Include="Assets\_Game\Script\UI\UIManger.cs" />
@@ -86,12 +85,16 @@
     <Compile Include="Assets\_Game\Script\CameraFollower.cs" />
     <Compile Include="Assets\_Game\Script\Character\StateMachine\IdleState.cs" />
     <Compile Include="Assets\_Game\Script\Character\Player.cs" />
+    <Compile Include="Assets\_Game\Script\UI\WeaponUI.cs" />
     <Compile Include="Assets\_Game\Script\GameEvent.cs" />
     <Compile Include="Assets\_Game\Script\Character\Bot.cs" />
     <Compile Include="Assets\AssetStore\NewBehaviourScript.cs" />
+    <Compile Include="Assets\_Game\Script\Manager\ShopManager.cs" />
     <Compile Include="Assets\_Game\Script\UserData\UserData.cs" />
+    <Compile Include="Assets\_Game\Script\UI\PopupSettingUI.cs" />
     <Compile Include="Assets\_Pool\Pool\SimplePool.cs" />
     <Compile Include="Assets\_Game\Script\GenericSingleton.cs" />
+    <Compile Include="Assets\_Game\Script\UI\IAP\WeaponShopItemUI.cs" />
     <Compile Include="Assets\_Game\Script\Character\Character.cs" />
     <Compile Include="Assets\_Game\Script\Weapon\BulletBase.cs" />
     <Compile Include="Assets\_Game\Script\Manager\EquipmentManager.cs" />
@@ -100,6 +103,7 @@
     <Compile Include="Assets\_Game\Script\Manager\BotManger.cs" />
     <Compile Include="Assets\_Game\Script\Character\StateMachine\AttackState.cs" />
     <Compile Include="Assets\Player Prefs Editor\PlayerPrefsUtility.cs" />
+    <Compile Include="Assets\_Game\Script\UI\IAP\IAPCoinUI.cs" />
     <Compile Include="Assets\_Game\Script\UI\MainUI.cs" />
   </ItemGroup>
   <ItemGroup>
