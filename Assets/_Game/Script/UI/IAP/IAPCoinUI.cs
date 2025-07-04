@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,6 +32,7 @@ public class IAPCoinUI : MonoBehaviour
     public void BuyItem()
     {
         BankSystem.Instance.DepositCoin(depositCoinAmount);
+        GameEvent.OnCoinFly.Invoke(transform);
     }
 
     internal void Setup(PackCoin packData)

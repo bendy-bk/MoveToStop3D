@@ -261,6 +261,9 @@ MonoBehaviour:
   coin: {fileID: 7306666900295984182}
   setting: {fileID: 4555655975611852434}
   popupSeting: {fileID: 3615110844174326972}
+  coinPrefab: {fileID: 2358213190042178142, guid: 051611b2abc8c864dbc65f396f8ba170, type: 3}
+  canvasTransform: {fileID: 0}
+  iAPCoinUIs: []
 --- !u!1 &2721425512340575109
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,7 +373,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000039551986}
+  m_AnchoredPosition: {x: 0, y: -0.00017174323}
   m_SizeDelta: {x: 0, y: 1639.7}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &3427287206242438385
@@ -864,7 +867,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2709140498152989631}
   m_HandleRect: {fileID: 4385406720580825552}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
