@@ -66,7 +66,6 @@ public class WeaponShopItemUI : MonoBehaviour
         }
     }
 
-
     public void BuyWeapon()
     {
         if (BankSystem.Instance.WithdrawCoin(data.price))
@@ -86,6 +85,7 @@ public class WeaponShopItemUI : MonoBehaviour
     {
         EquipmentManager.Instance.EquipWeapon(data.weaponType);
         Setup(data);
+        GameEvent.OnResetListWeapon.Invoke();
     }
 
 

@@ -19,7 +19,7 @@ public class WeaponData
     public string weaponName;
     public string weaponENG;
     public Sprite icon;
-    public GameUnit prefab;
+    public Weapon prefab;
     public BulletBase bullet;
     public int damage;
     public int price;

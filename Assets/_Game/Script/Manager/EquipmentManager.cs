@@ -26,11 +26,12 @@ public class EquipmentManager : GenericSingleton<EquipmentManager>
 
     public Weapon GetWeaponEquip()
     {
-        foreach (var w in Weapons)
+        foreach (var w in WeaponDTOs)
         {
-            if (w.IsEquipped)
+            if (w.isEquipped)
             {
-                return w;
+                Weapon s = ListWeaponSO.WeaponDatas.Where(_=> _.weaponType == w.weaponType).FirstOrDefault().prefab;
+                return s;
             }
         }
         return null; // Trường hợp không có vũ khí nào được trang bị
@@ -44,18 +45,14 @@ public class EquipmentManager : GenericSingleton<EquipmentManager>
     internal void UnlockWeapon(WeaponType type)
     {
         WeaponDTO w = GetWeaponByType(type);
-
         WeaponDTOs.Add(w);
-
         UserDataManager.Instance.SaveData();
     }
 
     private WeaponDTO GetWeaponByType(WeaponType type)
     {
         WeaponData wa = ListWeaponSO.WeaponDatas.FirstOrDefault(_=> _.weaponType == type);
-
         WeaponDTO w = new WeaponDTO(type, false);      
-
         return w;
     }
 

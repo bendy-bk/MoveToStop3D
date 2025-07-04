@@ -1,26 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class WeaponUI : UICanvas
 {
-
     [SerializeField] private Transform contentTransform; // kéo Content của ScrollView vào đây trong Inspector
     [SerializeField] private WeaponShopItemUI itemPrefab; // prefab UI mỗi item
     [SerializeField] private Button setting; // prefab UI mỗi item
-    [SerializeField] private GameObject popupSeting; 
-    [SerializeField] private TextMeshProUGUI coin; 
+    [SerializeField] private GameObject popupSeting;
+    [SerializeField] private TextMeshProUGUI coin;
 
     private ListWeaponSO Lists => EquipmentManager.Instance.ListWeaponSO;
-    
-    
+    private List<WeaponShopItemUI> weaponShopItemUIs = new();
+
 
     private void Awake()
     {
         OnInit();
+        SetupListItem();
     }
 
     private void Update()
@@ -30,11 +28,13 @@ public class WeaponUI : UICanvas
 
     private void OnEnable()
     {
-        setting.onClick.AddListener(OpenSetting);    
+        GameEvent.OnResetListWeapon.AddListener(SetupListItem);
+        setting.onClick.AddListener(OpenSetting);
     }
 
     private void OnDisable()
     {
+        GameEvent.OnResetListWeapon.RemoveListener(SetupListItem);
         setting.onClick?.RemoveListener(OpenSetting);
     }
 
@@ -43,7 +43,15 @@ public class WeaponUI : UICanvas
         foreach (var weaponData in Lists.WeaponDatas)
         {
             WeaponShopItemUI item = Instantiate(itemPrefab, contentTransform);
-            item.Setup(weaponData); // tạo hàm này trong WeaponShopItemUI để hiển thị tên, ảnh, giá
+            weaponShopItemUIs.Add(item);     
+        }
+    }
+
+    public void SetupListItem()
+    {
+        for (int i = 0; i < weaponShopItemUIs.Count; i++)
+        {
+            weaponShopItemUIs[i].Setup(Lists.WeaponDatas[i]);
         }
     }
 
@@ -51,5 +59,6 @@ public class WeaponUI : UICanvas
     {
         popupSeting.SetActive(true);
     }
+
 
 }
