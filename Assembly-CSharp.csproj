@@ -60,25 +60,27 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.55f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\_Game\Script\Character\StateMachine\PatrolState.cs" />
     <Compile Include="Assets\_Game\Script\Weapon\WeaponType.cs" />
     <Compile Include="Assets\_Game\Script\UI\LoseUI.cs" />
     <Compile Include="Assets\Player Prefs Editor\SimpleEncryption.cs" />
     <Compile Include="Assets\_Game\Script\Weapon\Weapon.cs" />
     <Compile Include="Assets\_Game\Script\Manager\LevelManager.cs" />
     <Compile Include="Assets\_Game\Script\ScriptableObject\ListPackCoin.cs" />
+    <Compile Include="Assets\_Game\Script\Character\StateMachine\MoveState.cs" />
     <Compile Include="Assets\_Game\Script\UserData\SaveSystem.cs" />
     <Compile Include="Assets\_Game\Script\UserData\UserDataManager.cs" />
     <Compile Include="Assets\JoystickPack\Scripts\JoystickControl.cs" />
     <Compile Include="Assets\_Pool\Pool\PoolController.cs" />
     <Compile Include="Assets\_Game\Script\Weapon\Spear.cs" />
     <Compile Include="Assets\_Game\Script\UI\UICanvas.cs" />
+    <Compile Include="Assets\_Game\Script\Character\StateMachine\DieState.cs" />
     <Compile Include="Assets\_Game\Script\ScriptableObject\ListWeaponSO.cs" />
     <Compile Include="Assets\_Pool\Pool\GameUnit.cs" />
     <Compile Include="Assets\_Game\Script\Manager\GameManager.cs" />
     <Compile Include="Assets\_Game\Script\Level\Level.cs" />
     <Compile Include="Assets\_Game\Script\CoinFlyEffect.cs" />
     <Compile Include="Assets\_Game\Script\UI\VictoryUI.cs" />
+    <Compile Include="Assets\_Game\Script\Character\StateMachine\DetectState.cs" />
     <Compile Include="Assets\_Game\Script\UI\ShopUI.cs" />
     <Compile Include="Assets\_Game\Script\UserData\BankSystem.cs" />
     <Compile Include="Assets\_Game\Script\UI\UIManger.cs" />
