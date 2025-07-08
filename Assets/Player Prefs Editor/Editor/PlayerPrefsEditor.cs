@@ -100,7 +100,7 @@ public class PlayerPrefsEditor : EditorWindow
     {
 		if(Application.platform == RuntimePlatform.OSXEditor)
 		{
-			// From Unity docs: On Mac OS X PlayerPrefs are stored in ~/Library/Preferences folder, in a file named unity.[company name].[product name].plist, where company and product names are the names set up in Project Settings. The same .plist file is used for both Projects run in the Editor and standalone players.
+			// From Unity docs: On Mac OS X PlayerPrefs are stored in ~/Library/Preferences folder, in a file named unity.[company name].[product name].plist, where company and product names are the names set up in Project Settings. The same .plist file is used for both Projects run in the Editor and standalone totalCharacters.
 	
 			// Construct the plist filename from the project's settings
 			string plistFilename = string.Format("unity.{0}.{1}.plist", companyName, productName);

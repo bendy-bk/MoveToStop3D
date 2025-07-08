@@ -1,45 +1,46 @@
 ﻿
+using System;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class Bot : Character
 {
+    public static event Action<Bot> OnBotDeathBot;
+    private Transform spawmPoint;
     public NavMeshAgent agent;
-
     private Vector3 destionation;
-
-    private IState<Bot> currentState;
+    [SerializeField] private GameObject circleTarget;
+    public GameObject CircleTarget { get => circleTarget; set => circleTarget = value; }
+    public StateMachine<Bot> StateMachine { get; private set; } = new StateMachine<Bot>();
 
     public bool IsDestination => Vector3.Distance(destionation, Vector3.right * TF.position.x + Vector3.forward * TF.position.z) < 0.1f;
+
+    public Transform SpawmPoint { get => spawmPoint; set => spawmPoint = value; }
 
     private void Start()
     {
         OnInit();
     }
 
+    private void Update()
+    {
+        if (GameManager.Instance.IsState(GameState.Gameplay))
+        {
+            StateMachine.Update(this);
+        }
+    }
+
     public override void OnInit()
     {
         base.OnInit();
-        ChangeState(new PatrolState());
-        // To do : random weapon for bot
-        //Instantiate(weapon, ThrowPoint.position, Quaternion.identity, ThrowPoint);
-
+        StateMachine.ChangeState(this, new IdleState());
 
         WeaponEquip = EquipmentManager.Instance.GetWeaponEquip();
         Instantiate(WeaponEquip, ThrowPoint.position, Quaternion.identity, ThrowPoint);
     }
 
-    private void Update()
-    {
-        if (GameManager.Instance.IsState(GameState.Gameplay) && currentState != null)
-        {
-            if (currentState != null)
-            {
-                currentState.OnExcute(this);
-            }
-        }
-    }
-
+ 
     public override void OnDespawn()
     {
         base.OnDespawn();
@@ -48,46 +49,60 @@ public class Bot : Character
     public void SetDestination(Vector3 position)
     {
         agent.enabled = true;
-        destionation = position;
-        destionation.y = 0;
+        //destionation = position;
+        //destionation.y = 0;
         agent.SetDestination(position);
-    }
-
-    public void ChangeState(IState<Bot> state)
-    {
-        if (currentState != null)
-        {
-            currentState.OnExit(this);
-        }
-
-        currentState = state;
-
-        if (currentState != null)
-        {
-            currentState.OnEnter(this);
-        }
     }
 
     internal void StopMove()
     {
         agent.enabled = false;
     }
-
-    public Vector3 RandomPosGround()
+    internal void StartMove()
     {
-        float x = UnityEngine.Random.Range(-20f, 20f); // nửa chiều dài
-        float z = UnityEngine.Random.Range(-20f, 20f); // nửa chiều rộng
-        float y = 0f; // mặt đất
+        agent.enabled = true;
+    }
 
-        Vector3 randomPos = new Vector3(x, y, z);
+    internal void FindTarget()
+    {
+        TargetCharacter = FindClosestTarget();
+    }
 
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(randomPos, out hit, 1f, NavMesh.AllAreas))
+    internal void MoveToTarget()
+    {
+        SetDestination(TargetCharacter.TF.position);
+    }
+
+    internal bool IsTargetInAttackRange()
+    {
+        if (TargetCharacter == null) return false;
+        return Vector3.Distance(transform.position, TargetCharacter.TF.position) <= 3f;
+    }
+
+    public void ChangeState(IState<Bot> newState)
+    {
+        StateMachine.ChangeState(this, newState);
+    }
+
+    public Character FindClosestTarget()
+    {
+        float minDist = float.MaxValue;
+        Character closest = null;
+
+        foreach (var player in LevelManager.Instance.totalCharacters)
         {
-            return hit.position;
+            // Loại bỏ chính bản thân mình
+            if (player == this) continue;
+
+            float dist = Vector3.Distance(transform.position, player.transform.position);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = player;
+            }
         }
 
-        return transform.position;
+        return closest;
     }
 
 }

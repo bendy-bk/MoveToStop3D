@@ -9,15 +9,15 @@ public class IdleState : IState<Bot>
     {
         t.ChangeAnim(Constants.ANIM_IDLE);
         timer = 0f;
-        maxTimer = Random.Range(2, 5);
+        maxTimer = Random.Range(1,7);
     }
 
-    public void OnExcute(Bot t)
+    public void OnExecute(Bot t)
     {
         timer += Time.deltaTime;
         if (timer >= maxTimer)
         {
-            t.ChangeState(new PatrolState());
+            t.ChangeState(new DetectState());
         }
     }
 

@@ -23,14 +23,8 @@ public class Player : Character
 
             if (Model != null)
                 Model.forward = direction;
-            ChangeAnim(Constants.ANIM_RUN);
 
-            // Nếu đang di chuyển mà có coroutine -> stop nó
-            if (throwCoroutine != null)
-            {
-                StopCoroutine(throwCoroutine);
-                throwCoroutine = null;
-            }
+            ChangeAnim(Constants.ANIM_RUN);
 
         }
         else if (JoystickControl.direct == Vector3.zero)
@@ -39,11 +33,10 @@ public class Player : Character
 
             if (CharacterCount > 0)
             {
-                Attack();
+                Attack(); // gọi attack một lần duy nhất mỗi chu kỳ
             }
-            else if (CharacterCount == 0)
+            else
             {
-                IsAttacking = false;
                 ChangeAnim(Constants.ANIM_IDLE);
             }
         }
@@ -51,6 +44,8 @@ public class Player : Character
 
     public override void OnInit()
     {
+        TargetCharacter = null;
+        transform.localScale = Vector3.one;
         WeaponEquip = EquipmentManager.Instance.GetWeaponEquip();
 
         GameUnit u = Instantiate(WeaponEquip, Vector3.zero, Quaternion.identity, ThrowPoint);

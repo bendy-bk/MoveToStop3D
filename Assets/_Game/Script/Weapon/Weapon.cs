@@ -27,15 +27,12 @@ public class Weapon : GameUnit
 
         //BulletBase bullet = Instantiate(bulletBase, CharacterOwner.ThrowPoint.position, Quaternion.identity);
         //Debug.Log("Player:" + CharacterOwner.ThrowPoint.position);
-
         var bullet = SimplePool.Spawn<BulletBase>(BulletBase.poolType, CharacterOwner.ThrowPoint.position, Quaternion.identity);
         bullet.TF.rotation = Quaternion.Euler(90, AngelFly(), 0);
-
         bullet.gameObject.SetActive(false);
         await Task.Delay(100);
         //bullet.TF.position = CharacterOwner.ThrowPoint.position;
         bullet.gameObject.SetActive(true);
-
         //Debug.Log("Bullet:" + bullet.TF.position);
         bullet.SetTargetFly(CharacterOwner, target, targetPos);
 

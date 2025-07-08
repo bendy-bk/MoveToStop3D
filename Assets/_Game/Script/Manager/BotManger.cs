@@ -6,79 +6,82 @@ using UnityEngine;
 public class BotManger : GenericSingleton<BotManger>
 {
     private Level curLevel;
+    [SerializeField] private float timeDelay = 5f;
 
-    [SerializeField]private List<Bot> bots = new();
+    [SerializeField] private List<Bot> botsActive = new();
+
+    [SerializeField] private List<Bot> botsInactive = new();
 
     private void OnEnable()
     {
-        Character.OnBotDeath += HandleBotDeath;
-    } 
+        Bot.OnBotDeathBot += HandleBotDeath;
+    }
+
+    private void OnDisable()
+    {
+        Bot.OnBotDeathBot -= HandleBotDeath;
+    }
 
     public Level CurLevel { get => curLevel; set => curLevel = value; }
-    public List<Bot> Bots { get => bots; set => bots = value; }
+    public List<Bot> BotsActive { get => botsActive; set => botsActive = value; }
+    public List<Bot> BotsInactive { get => botsInactive; set => botsInactive = value; }
 
     public void SpawnBot(int amount)
     {
         //Bot
-        for (int i = 0; i < amount-1; i++)
+        for (int i = 0; i < amount - 1; i++)
         {
             Bot bot = SimplePool.Spawn<Bot>(PoolType.Bot, CurLevel.SpawnPoint[i].position, Quaternion.identity);
-            Bots.Add(bot);
+            bot.SpawmPoint = curLevel.SpawnPoint[i];
+            BotsActive.Add(bot);
         }
     }
 
-    public void HandleBotDeath(Character bot)
+    public void HandleBotDeath(Bot bot)
     {
-        StartCoroutine(RespawnBotAfterDelay(5f));
+        bot.ChangeState(new DieState());
+        bot.Characters.Clear();
+        SimplePool.Despawn(bot);
+        botsActive.Remove(bot);
+        botsInactive.Add(bot);
+
+        if (GameManager.Instance.IsState(GameState.Gameplay))
+        {
+            StartCoroutine(RespawnBotAfterDelay(timeDelay, bot.SpawmPoint));
+        } 
     }
 
-    private IEnumerator RespawnBotAfterDelay(float delay)
+    private IEnumerator RespawnBotAfterDelay(float delay, Transform pointSpawn)
     {
-        yield return new WaitForSeconds(delay);
-
-        Transform spawnPoint = GetFreeSpawnPoint();
-
-        if (spawnPoint != null)
+        // Kiểm tra pointSpawn có còn tồn tại không
+        if (pointSpawn == null)
         {
-            Bot newBot = SimplePool.Spawn<Bot>(PoolType.Bot, spawnPoint.position, Quaternion.identity);
-            newBot.Characters.Clear();
-            Bots.Add(newBot);
+            Debug.LogWarning("Spawn point bị xoá trong lúc delay.");
+            yield break;
         }
-        else
-        {
-            Debug.LogWarning("Không còn vị trí spawn trống!");
-        }
+
+        Bot newBot = SimplePool.Spawn<Bot>(PoolType.Bot, pointSpawn.position, Quaternion.identity);
+        newBot.CircleTarget.SetActive(false);
+        newBot.ChangeState(new IdleState());
+        //
+        botsInactive.Remove(newBot);
+        BotsActive.Add(newBot);
     }
-
-    private Transform GetFreeSpawnPoint()
-    {
-        foreach (var point in curLevel.SpawnPoint)
-        {
-            bool occupied = false;
-            foreach (var bot in Bots)
-            {
-                if (Vector3.Distance(bot.transform.position, point.position) < 3f) // khoảng cách nhỏ nghĩa là đang chiếm
-                {
-                    occupied = true;
-                    break;
-                }
-            }
-
-            if (!occupied)
-                return point;
-        }
-
-        return null; // không có chỗ nào trống
-    }
-
 
     public void ChangeStateBotNull()
     {
-        foreach (var item in Bots)
+        foreach (var item in BotsActive)
         {
             item.StopMove();
             item.ChangeState(null);
         }
+    }
+
+    public void ResetBotManager()
+    {
+        botsActive.Clear();
+        botsInactive.Clear();
+        SimplePool.Release(PoolType.Bot);
     }
 
 }

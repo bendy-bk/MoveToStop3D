@@ -1,26 +1,21 @@
 ﻿
+using UnityEngine.UIElements;
+
 public class AttackState : IState<Bot>
 {
     public void OnEnter(Bot t)
     {
-
+        t.Attack();
     }
 
-    public void OnExcute(Bot t)
+    public void OnExecute(Bot t)
     {
-        if (t.CharacterCount > 0)
+        if (!t.IsAttacking)
         {
-            t.Attack();
-        }
-        else
-        {
-            t.ChangeState(new PatrolState());
+            t.ChangeState(new DetectState());
         }
     }
 
-    public void OnExit(Bot t)
-    {
-
-    }
+    public void OnExit(Bot t){}
 }
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class LevelManager : GenericSingleton<LevelManager>
@@ -6,7 +7,8 @@ public class LevelManager : GenericSingleton<LevelManager>
     [SerializeField] private Level[] levelPrefabs;
     [SerializeField] private Bot botPrefab;
     [SerializeField] private Player player;
-    [SerializeField] private Transform placeGameplay;
+    [SerializeField] private Transform CanvasGameplay;
+    [SerializeField] public List<Character> totalCharacters = new();
 
     private int levelIndex;
     private Level currentLevel;
@@ -19,7 +21,7 @@ public class LevelManager : GenericSingleton<LevelManager>
     }
 
     public void Start()
-    {   
+    {
         UIManager.Instance.OpenUI<MainUI>();
     }
 
@@ -32,12 +34,14 @@ public class LevelManager : GenericSingleton<LevelManager>
         //SetUp player
         player.TF.position = currentLevel.startPoint.position;
         player.TF.rotation = Quaternion.identity;
+       
 
         //Khoi tao player
         player.OnInit();
         BotManger.Instance.CurLevel = currentLevel;
         BotManger.Instance.SpawnBot(CharacterAmount);
         UIManager.Instance.OpenUI<JoystickControl>();
+        InitCharacter();
     }
 
     public void LoadLevel(int level)
@@ -49,8 +53,7 @@ public class LevelManager : GenericSingleton<LevelManager>
 
         if (level < levelPrefabs.Length)
         {
-            currentLevel = Instantiate(levelPrefabs[level], placeGameplay);
-            //currentLevel.OnInit();
+            currentLevel = Instantiate(levelPrefabs[level], CanvasGameplay);
         }
         else
         {
@@ -64,7 +67,16 @@ public class LevelManager : GenericSingleton<LevelManager>
         SimplePool.ReleaseAll();
         player.TotalKill = 0;
         player.Characters.Clear();
-        BotManger.Instance.Bots.Clear();
+        totalCharacters.Clear();
+        BotManger.Instance.ResetBotManager();
+        
+    }
+
+    internal void OnStartGame()
+    {
+        GameManager.Instance.ChangeState(GameState.Gameplay);
+        LoadLevel(levelIndex);
+        OnInit();
     }
 
     public void OnRetry()
@@ -81,8 +93,9 @@ public class LevelManager : GenericSingleton<LevelManager>
         GameManager.Instance.ChangeState(GameState.Gameplay);
         UIManager.Instance.CloseUI<JoystickControl>();
         levelIndex++;
-        PlayerPrefs.SetInt(Constants.PLAYERPREF_LEVEL, levelIndex); 
+        PlayerPrefs.SetInt(Constants.PLAYERPREF_LEVEL, levelIndex);
         PlayerPrefs.Save();
+
         OnReset();
         LoadLevel(levelIndex);
         OnInit();
@@ -95,15 +108,8 @@ public class LevelManager : GenericSingleton<LevelManager>
             GameManager.Instance.ChangeState(GameState.Pause);
             BotManger.Instance.ChangeStateBotNull();
             UIManager.Instance.CloseUI<JoystickControl>();
-            UIManager.Instance.OpenUI<VictoryUI>();      
+            UIManager.Instance.OpenUI<VictoryUI>();
         }
-    }
-
-    internal void OnStartGame()
-    {
-        GameManager.Instance.ChangeState(GameState.Gameplay);
-        LoadLevel(levelIndex);
-        OnInit();
     }
 
     internal void Lose()
@@ -114,6 +120,14 @@ public class LevelManager : GenericSingleton<LevelManager>
         UIManager.Instance.CloseUI<JoystickControl>();
     }
 
+    public void InitCharacter()
+    {
+        totalCharacters.Add(player);
+        foreach (Character bot in BotManger.Instance.BotsActive)
+        {
+            totalCharacters.Add(bot);
+        }
+    }
 
 }
 

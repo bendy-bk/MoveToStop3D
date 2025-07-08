@@ -5,7 +5,7 @@ public class AnimationEventShoot : MonoBehaviour
 
     public void CallThrow()
     {
-        Debug.Log("Shooted");
+        //Debug.Log("Shooted");
         Character.Throw();
     }
 }
