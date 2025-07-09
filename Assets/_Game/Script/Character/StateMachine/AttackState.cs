@@ -5,15 +5,17 @@ public class AttackState : IState<Bot>
 {
     public void OnEnter(Bot t)
     {
-        t.Attack();
+        if (t.CharacterCount > 0) {
+            t.Attack();
+        } else
+        {
+            t.ChangeState(new DetectState());
+        }
     }
 
     public void OnExecute(Bot t)
     {
-        if (!t.IsAttacking)
-        {
-            t.ChangeState(new DetectState());
-        }
+        
     }
 
     public void OnExit(Bot t){}

@@ -21,6 +21,7 @@ public class MoveState : IState<Bot>
 
         if (t.IsTargetInAttackRange())
         {
+            t.IsMoving = false;
             t.ChangeState(new AttackState());
         }
     }

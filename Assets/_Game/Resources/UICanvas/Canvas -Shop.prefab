@@ -189,7 +189,7 @@ Canvas:
   m_GameObject: {fileID: 2471637919002041320}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -261,8 +261,8 @@ MonoBehaviour:
   coin: {fileID: 7306666900295984182}
   setting: {fileID: 4555655975611852434}
   popupSeting: {fileID: 3615110844174326972}
-  coinPrefab: {fileID: 2358213190042178142, guid: 051611b2abc8c864dbc65f396f8ba170, type: 3}
-  canvasTransform: {fileID: 0}
+  coinPrefab: {fileID: 8496960419393989656, guid: 8efd9d38611a10448be6d185b511fd1d, type: 3}
+  canvasTransform: {fileID: 8604985628538707804}
   iAPCoinUIs: []
 --- !u!1 &2721425512340575109
 GameObject:

@@ -78,6 +78,7 @@ public class Character : GameUnit
 
     public void Attack()
     {
+        //model.LookAt(targetCharacter.TF);
         ChangeAnim(Constants.ANIM_ATTACK);
     }
 
@@ -90,9 +91,13 @@ public class Character : GameUnit
     }
 
     public void Throw()
-    {
+    {  
         if (Characters.Count > 0 && !IsMoving)
         {
+            if (this is Bot)
+            {
+                Debug.Log("bot shoot");
+            }
             TargetCharacter = Characters.Count > 0 ? Characters[0] : null;
             FixedTarget = TargetCharacter.TF.position;
             weaponCurrent.SetCharacterowner(this, TargetCharacter, FixedTarget);

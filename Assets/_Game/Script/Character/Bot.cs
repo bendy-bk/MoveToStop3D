@@ -65,17 +65,18 @@ public class Bot : Character
     internal void FindTarget()
     {
         TargetCharacter = FindClosestTarget();
+        FixedTarget = TargetCharacter.TF.position;
     }
 
     internal void MoveToTarget()
     {
-        SetDestination(TargetCharacter.TF.position);
+        SetDestination(FixedTarget);
     }
 
     internal bool IsTargetInAttackRange()
     {
         if (TargetCharacter == null) return false;
-        return Vector3.Distance(transform.position, TargetCharacter.TF.position) <= 3f;
+        return Vector3.Distance(transform.position, FixedTarget) <= 3f;
     }
 
     public void ChangeState(IState<Bot> newState)

@@ -9,6 +9,7 @@ public class DetectState : IState<Bot>
 
         if (t.TargetCharacter != null)
         {
+            t.IsMoving = true;
             t.ChangeState(new MoveState());
         }
         else

@@ -60,13 +60,14 @@ public class ShopUI : UICanvas
 
     private void CoinFly(Transform t)
     {
-        StartCoroutine(SpawnCoins(t, transform));
+        StartCoroutine(SpawnCoins(t, coin.transform));
     }
 
    
 
     IEnumerator SpawnCoins(Transform startPoint, Transform targetPoint)
     {
+        
         for (int i = 0; i < 5; i++)
         {
             GameObject coin = Instantiate(coinPrefab, canvasTransform);
