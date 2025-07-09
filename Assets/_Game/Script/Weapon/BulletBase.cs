@@ -10,9 +10,6 @@ public class BulletBase : GameUnit
 {
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected float speed;
-
-    private Coroutine coroutine;
-
     protected Character characterOwner;
     protected Character characterTarget;
     protected Vector3 directionAttack;
@@ -23,21 +20,6 @@ public class BulletBase : GameUnit
         MoveToTarget();
         RotateToTarget();
     }
-    //private void OnEnable()
-    //{
-    //    if (coroutine != null) {
-    //        StopCoroutine(coroutine);
-    //    }
-    //    coroutine = StartCoroutine(HandleDeath());
-    //}
-
-    //private IEnumerator HandleDeath()
-    //{
-    //    yield return new WaitForSeconds(3f);
-
-    //    OnDespawn();
-        
-    //}
 
     public override void OnInit()
     {
@@ -49,14 +31,9 @@ public class BulletBase : GameUnit
         SimplePool.Despawn(this);
     }
 
-    protected virtual void RotateToTarget()
-    {
-        // Mặc định không làm gì
-    }
+    protected virtual void RotateToTarget() { }
 
-    protected virtual void MoveToTarget()
-    {   
-    }
+    protected virtual void MoveToTarget() { }
 
     public void SetTargetFly(Character owner, Character target, Vector3 pos)
     {
@@ -70,14 +47,23 @@ public class BulletBase : GameUnit
         if (other.CompareTag("Player"))
         {
             Character c = other.GetComponent<Character>();
-
+            characterOwner?.RemoveTarget(characterTarget); // Xoá khỏi danh sách
             // Tránh tự va chạm chính mình
             if (c != null && c != characterOwner)
-            {        
-                characterOwner?.RemoveTarget(characterTarget); // Xoá khỏi danh sách
-                c.OnDeath();// Mục tiêu chết   
-                characterOwner?.OnHit();                                                  
-                OnDespawn();  
+            {
+                if (c is Player player)
+                {
+                    player.OnDespawn();
+                }
+                else
+                if (c is Bot bot)
+                {
+                    bot.ChangeState(new DieState());
+                }
+
+                characterOwner?.OnHit();
+                //Despawn bullet
+                OnDespawn();
             }
         }
     }

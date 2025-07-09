@@ -3,7 +3,7 @@
 public class Player : Character
 {
     [SerializeField] private float speed = 5;
-    
+
     private void Update()
     {
         if (GameManager.Instance.IsState(GameState.Gameplay))
@@ -11,6 +11,7 @@ public class Player : Character
             Move();
         }
     }
+
     public override void Move()
     {
         if (JoystickControl.direct != Vector3.zero)
@@ -42,6 +43,17 @@ public class Player : Character
         }
     }
 
+    public override void OnDespawn()
+    {
+
+        GameManager.Instance.ChangeState(GameState.Pause); // 1. Pause trước
+
+        ChangeAnim(Constants.ANIM_DEAD); // 2. anim
+
+        LevelManager.Instance.Lose();
+
+    }
+
     public override void OnInit()
     {
         TargetCharacter = null;
@@ -52,6 +64,13 @@ public class Player : Character
         u.TF.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         //GameUnit u = SimplePool.Spawn<Weapon>(PoolType.Bullet, ThrowPoint.position, Quaternion.identity);
         //u.transform.SetParent(ThrowPoint);
+
+    }
+
+    public override void ResetCharacter()
+    {
+        TotalKill = 0;
+        Characters.Clear();
 
     }
 

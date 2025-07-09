@@ -38,9 +38,13 @@ public class LevelManager : GenericSingleton<LevelManager>
 
         //Khoi tao player
         player.OnInit();
+        UIManager.Instance.OpenUI<JoystickControl>();
+
+        //Khoi tao bot
         BotManger.Instance.CurLevel = currentLevel;
         BotManger.Instance.SpawnBot(CharacterAmount);
-        UIManager.Instance.OpenUI<JoystickControl>();
+       
+        //Add player & bot vao danh sach quan li
         InitCharacter();
     }
 
@@ -57,6 +61,8 @@ public class LevelManager : GenericSingleton<LevelManager>
         }
         else
         {
+
+            ///TODO
             // Done game
         }
 
@@ -65,11 +71,9 @@ public class LevelManager : GenericSingleton<LevelManager>
     public void OnReset()
     {
         SimplePool.ReleaseAll();
-        player.TotalKill = 0;
-        player.Characters.Clear();
+        player.ResetCharacter();
         totalCharacters.Clear();
-        BotManger.Instance.ResetBotManager();
-        
+        BotManger.Instance.ResetBotManager(); 
     }
 
     internal void OnStartGame()

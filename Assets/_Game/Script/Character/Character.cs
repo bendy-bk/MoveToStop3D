@@ -27,11 +27,12 @@ public class Character : GameUnit
     [SerializeField] protected bool isAttacking = false;
     [SerializeField] private bool isMoving = false;
     
-
     private Weapon weaponCurrent;
     private string currentAnim;
     protected Coroutine attackCoroutine;
     private Character targetCharacter;
+
+
     public int CharacterCount => Characters.Count;
     public bool IsAttacking { get => isAttacking; set => isAttacking = value; }
     public bool IsMoving { get => isMoving; set => isMoving = value; }
@@ -43,18 +44,7 @@ public class Character : GameUnit
     public List<Character> Characters { get => characters; set => characters = value; }
     public Character TargetCharacter { get => targetCharacter; set => targetCharacter = value; }
 
-
-    private void OnEnable()
-    {
-        Character.RemoveBotDeaded += HandleTargetDeath;
-    }
-
-    private void OnDisable()
-    {
-        Character.RemoveBotDeaded -= HandleTargetDeath;
-    }
-
-    private void HandleTargetDeath(Character deadChar)
+    protected void HandleTargetDeath(Character deadChar)
     {
         if (Characters.Contains(deadChar))
         {
@@ -76,37 +66,6 @@ public class Character : GameUnit
         LevelManager.Instance.CheckWin(TotalKill);
     }
 
-    public virtual void OnDeath()
-    {
-        if (this is Player)
-        {
-            GameManager.Instance.ChangeState(GameState.Pause); // 1. Pause trước
-        }
-
-        ChangeAnim(Constants.ANIM_DEAD); // 2. anim
-
-        StartCoroutine(HandleDeath());
-    }
-
-    private IEnumerator HandleDeath()
-    {
-        yield return new WaitForSeconds(2f); 
-
-        if (this is Player)
-        {
-            LevelManager.Instance.Lose(); 
-        }
-
-        else if (this is Bot)
-        { 
-            RemoveBotDeaded?.Invoke(this);
-
-            BotManger.Instance.HandleBotDeath(this as Bot);
-
-        }
-
-    }
-
     public void UpSize()
     {
         character.localScale += Vector3.one * 0.01f;
@@ -125,7 +84,7 @@ public class Character : GameUnit
     private IEnumerator WaitForNextAttack()
     {
         yield return new WaitForSeconds(1f); // delay ngắn để giữ anim Attack thêm chút
-        Debug.Log("idle");
+        //Debug.Log("idle");
         ChangeAnim(Constants.ANIM_IDLE); // chuyển về idle sau khi đánh xong
         yield return new WaitForSeconds(timedelay); // delay tiếp theo
     }
@@ -162,6 +121,8 @@ public class Character : GameUnit
     {
 
     }
+
+    public virtual void ResetCharacter() {}
 
     private void OnTriggerEnter(Collider other)
     {

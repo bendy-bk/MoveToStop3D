@@ -8,12 +8,12 @@ public class Bot : Character
 {
     public static event Action<Bot> OnBotDeathBot;
     private Transform spawmPoint;
-    public NavMeshAgent agent;
-    private Vector3 destionation;
+    [SerializeField] private NavMeshAgent agent;
     [SerializeField] private GameObject circleTarget;
+    private Vector3 destionation;
+
     public GameObject CircleTarget { get => circleTarget; set => circleTarget = value; }
     public StateMachine<Bot> StateMachine { get; private set; } = new StateMachine<Bot>();
-
     public bool IsDestination => Vector3.Distance(destionation, Vector3.right * TF.position.x + Vector3.forward * TF.position.z) < 0.1f;
 
     public Transform SpawmPoint { get => spawmPoint; set => spawmPoint = value; }
@@ -33,17 +33,15 @@ public class Bot : Character
 
     public override void OnInit()
     {
-        base.OnInit();
         StateMachine.ChangeState(this, new IdleState());
-
         WeaponEquip = EquipmentManager.Instance.GetWeaponEquip();
         Instantiate(WeaponEquip, ThrowPoint.position, Quaternion.identity, ThrowPoint);
     }
 
- 
     public override void OnDespawn()
     {
-        base.OnDespawn();
+        RemoveBotDeaded += HandleTargetDeath;    
+        OnBotDeathBot?.Invoke(this);
     }
 
     public void SetDestination(Vector3 position)
@@ -58,6 +56,7 @@ public class Bot : Character
     {
         agent.enabled = false;
     }
+
     internal void StartMove()
     {
         agent.enabled = true;

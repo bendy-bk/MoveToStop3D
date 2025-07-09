@@ -39,7 +39,6 @@ public class BotManger : GenericSingleton<BotManger>
 
     public void HandleBotDeath(Bot bot)
     {
-        bot.ChangeState(new DieState());
         bot.Characters.Clear();
         SimplePool.Despawn(bot);
         botsActive.Remove(bot);
@@ -72,7 +71,6 @@ public class BotManger : GenericSingleton<BotManger>
     {
         foreach (var item in BotsActive)
         {
-            item.StopMove();
             item.ChangeState(null);
         }
     }
